@@ -12,6 +12,7 @@ $builder = new ContainerBuilder();
 $builder->addDefinitions('config/container.php');
 $container = $builder->build();
 
+// https://github.com/zendframework/zend-diactoros/blob/master/src/ServerRequest.php
 $request = ServerRequestFactory::fromGlobals(
     $_SERVER,
     $_GET,
