@@ -5,32 +5,59 @@ namespace SimpleMVC\Helper;
 
 class CryptMsg {
 
-    protected $sessionKeyFile = '/config/sessionKey.key';
-    protected $key = '';
-    protected $nonce;
+    protected static $sessionKeyFile = '/config/sessionKey.key';
+    protected static $key;
+    protected static $nonce;
+    protected static $instance;
     
-    public function __construct(string $nonce) {
-        $this->sessionKeyFile = dirname(__DIR__ ,2) . $this->sessionKeyFile; 
+    // constructor is protected, so you must call the static instance() methos
+    protected function __construct() {
+        self::$sessionKeyFile = dirname(__DIR__ ,2) . self::$sessionKeyFile; 
 
-        if (! file_exists($this->sessionKeyFile)) {
-            touch($this->sessionKeyFile);
+        if (! file_exists(self::$sessionKeyFile)) {
+            touch(self::$sessionKeyFile);
         }
-        $this->key = file_get_contents($this->sessionKeyFile);
-        $this->key = $this->key === false ? '' : $this->key;
+        self::$key = file_get_contents(self::$sessionKeyFile);
 
-        if (strlen($this->key) < 1) {
-            $this->key = base64_encode(random_bytes(SODIUM_CRYPTO_SECRETBOX_KEYBYTES));
-            file_put_contents($this->sessionKeyFile, $this->key);
+        if (strlen(self::$key) < 1 || self::$key === false) {
+            self::$key = random_bytes(SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
+            file_put_contents(self::$sessionKeyFile, base64_encode(self::$key));
+        } else {
+            self::$key = base64_decode(self::$key);
+        }
+
+        if (is_null(self::$nonce)) {
+            self::$nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
         }
         
-        $this->nonce = $nonce;
+        return $this;
     }
 
-    public function encrypt(string $msg): string {
-        return sodium_crypto_secretbox($msg, $this->nonce, base64_decode($this->key));
+    // entry point for instance
+    public static function instance() {       
+        if (is_null(self::$instance)) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
-    public function decrypt(string $msg): string {
-        return sodium_crypto_secretbox_open($msg, $this->nonce, base64_decode($this->key));
+    // nonce getter (no setter)
+    public function nonce() {
+        return self::$nonce;
+    }
+
+
+    public function encrypt(string $msg, string $nonce): string {
+        return sodium_crypto_secretbox($msg, $nonce, self::$key);
+    }
+
+
+    public function decrypt(string $msg, string $nonce): string {
+        $value = sodium_crypto_secretbox_open($msg, $nonce, self::$key);
+        // error throwing?
+        if ($value === false){
+            return '';
+        }
+        return $value;
     }
 }
