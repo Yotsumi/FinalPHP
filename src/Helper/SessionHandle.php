@@ -3,54 +3,45 @@ declare(strict_types=1);
 
 namespace SimpleMVC\Helper;
 
-use CryptMsg;
+use SimpleMVC\Helper\CryptMsg;
 
 class SessionHandle {
 
     protected static $instance;
     protected $crypt;
-    const NONCE = 'nonce';
 
-    protected function __construct() {
+    protected function __construct(string $nonce) {
         $expires = 3600 * 3;
+        $secure = false;
+        $httponly = true;
+        $nonceBytes = 4;
+
         // start session (if needed)
-        if (session_status === PHP_SESSION_NONE ) {
+        if (session_status() === PHP_SESSION_NONE ) {
             session_start();
         }
-
-        // set sessionid in a cookie if needed (lasts 3 hours)
-        if (! isset($_COOKIE['PHPSESSID'])) {
-            setcookie('PHPSESSID', SID, $expires, '', false, true);
-        }
-        
-        if (! isset($_COOKIE[NONCE])) {
-            setcookie(NONCE, base64encode(random_bytes($complex)), $expires, '', false, true);
-        }
-
-        $this->crypt = CryptMsg::get();
+       
+        $this->nonce = $nonce;
+        $this->crypt = CryptMsg::instance();
     }
 
-    public static function instance() {
+    public static function instance(string $nonce) {
         if (is_null(self::$instance)) {
-            self::$instance = new self();
+            self::$instance = new self($nonce);
         }
         
         return self::$instance;
     }
 
 
-    protected function getNonce() :string {
-        return htmlspecialchars($_COOKIE['nonce']);
-    }
-
     public function set(string $key, string $value) {
-        $value = $this->crypt->encrypt($value, getNonce());
+        $value = $this->crypt->encrypt($value, $this->crypt->nonce());
         $_SESSION[$key] = htmlspecialchars($value);
     }
 
     public function get(string $key) :string{
         $value = $_SESSION[$key];
-        return htmlspecialchars($this->crypt->decrypt($value, getNonce()));
+        return htmlspecialchars($this->crypt->decrypt($value, $this->crypt->nonce()));
     }
 
 

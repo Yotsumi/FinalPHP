@@ -6,7 +6,8 @@ namespace SimpleMVC\Helper;
 class CryptMsg {
 
     protected static $sessionKeyFile = '/config/sessionKey.key';
-    protected static $key = '';
+    protected static $key;
+    protected static $nonce;
     protected static $instance;
     
     // constructor is protected, so you must call the static instance() methos
@@ -18,9 +19,15 @@ class CryptMsg {
         }
         self::$key = file_get_contents(self::$sessionKeyFile);
 
-        if (strlen(self::$key) === false) {
-            self::$key = base64_encode(random_bytes(SODIUM_CRYPTO_SECRETBOX_KEYBYTES));
-            file_put_contents(self::$$sessionKeyFile, self::$$key);
+        if (strlen(self::$key) < 1 || self::$key === false) {
+            self::$key = random_bytes(SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
+            file_put_contents(self::$sessionKeyFile, base64_encode(self::$key));
+        } else {
+            self::$key = base64_decode(self::$key);
+        }
+
+        if (is_null(self::$nonce)) {
+            self::$nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
         }
         
         return $this;
@@ -34,13 +41,23 @@ class CryptMsg {
         return self::$instance;
     }
 
+    // nonce getter (no setter)
+    public function nonce() {
+        return self::$nonce;
+    }
+
 
     public function encrypt(string $msg, string $nonce): string {
-        return sodium_crypto_secretbox($msg, $nonce, base64_decode(self::$key));
+        return sodium_crypto_secretbox($msg, $nonce, self::$key);
     }
 
 
     public function decrypt(string $msg, string $nonce): string {
-        return sodium_crypto_secretbox_open($msg, $nonce, base64_decode(self::$key));
+        $value = sodium_crypto_secretbox_open($msg, $nonce, self::$key);
+        // error throwing?
+        if ($value === false){
+            return '';
+        }
+        return $value;
     }
 }
