@@ -23,6 +23,10 @@ return [
         return SessionHandle::instance($c->get(CryptMsg::class), $c->get(CryptMsg::class)::nonce());
     },
 
+    LoginUser::class => function(ContainerInterface $c) {
+        return new LoginUser($c->get(SessionHandle::class), UtenteDb::class);
+    },
+
     // db
     'public_db_manager' => function () use ($pdoConfig){
         return new Helper\Test(new PDO(         // Cambiare Helper\Test e inserire il namespace\classname della classe pdo

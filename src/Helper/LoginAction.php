@@ -20,15 +20,6 @@ class LoginAction {
         $this->table = $table;
     }
 
-    // basic compare from db
-    protected function setSession(User $user) : bool  {
-        $this->session->set(SESSION_USER_ID, $user->getId());
-        $this->session->set(SESSION_USERNAME, $user->getUsername());
-        $this->session->set(SESSION_IP, filter_var($_SERVER['REMOTE_ADDRESS'], FILTER_SANITIZE_IP));
-        $this->session->regen();
-    }
-
-
     // method to check over db table and allow users
     public function loginUser(string $username, string $password) : bool {
         $user = $this->table->selectFromUsername($username);
@@ -55,6 +46,15 @@ class LoginAction {
                 return false;
         }
         return true;
+    }
+
+
+    // store session data
+    protected function setSession(User $user) : bool  {
+        $this->session->set(SESSION_USER_ID, $user->getId());
+        $this->session->set(SESSION_USERNAME, $user->getUsername());
+        $this->session->set(SESSION_IP, filter_var($_SERVER['REMOTE_ADDRESS'], FILTER_SANITIZE_IP));
+        $this->session->regen();
     }
 
 }
