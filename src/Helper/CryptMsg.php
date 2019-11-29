@@ -10,6 +10,7 @@ class CryptMsg {
     protected static $nonce;
     protected static $instance;
     
+    
     // constructor is protected, so you must call the static instance() methos
     protected function __construct() {
         self::$sessionKeyFile = dirname(__DIR__ ,2) . self::$sessionKeyFile; 
@@ -26,10 +27,7 @@ class CryptMsg {
             self::$key = base64_decode(self::$key);
         }
 
-        if (is_null(self::$nonce)) {
-            self::$nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
-        }
-        
+        self::nonce();
         return $this;
     }
 
@@ -42,7 +40,19 @@ class CryptMsg {
     }
 
     // nonce getter (no setter)
-    public function nonce() {
+    public static function nonce() {
+        if (is_null(self::$nonce)) {
+
+            if (! isset($_COOKIE['nonce'])) {
+                $expires = 3600*3;
+                self::$nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
+                setcookie('nonce', self::$nonce, time() + $expires);  
+
+            } else {
+                self::$nonce = $_COOKIE['nonce'];
+            }
+        }
+        
         return self::$nonce;
     }
 

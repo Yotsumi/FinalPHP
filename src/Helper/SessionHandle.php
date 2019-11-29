@@ -10,27 +10,26 @@ class SessionHandle {
     protected static $instance;
     protected $crypt;
 
-    protected function __construct(string $nonce) {
-        $expires = 3600 * 3;
-        $secure = false;
-        $httponly = true;
-        $nonceBytes = 4;
-
+    protected function __construct(CryptMsg $crypt, string $nonce) {
         // start session (if needed)
         if (session_status() === PHP_SESSION_NONE ) {
             session_start();
         }
        
         $this->nonce = $nonce;
-        $this->crypt = CryptMsg::instance();
+        $this->crypt = $crypt;
     }
 
-    public static function instance(string $nonce) {
+    public static function instance(CryptMsg $crypt, string $nonce) {
         if (is_null(self::$instance)) {
-            self::$instance = new self($nonce);
+            self::$instance = new self($crypt, $nonce);
         }
         
         return self::$instance;
+    }
+
+    public function regen(): bool {
+        return session_regenerate_id();
     }
 
 
@@ -44,6 +43,15 @@ class SessionHandle {
         return htmlspecialchars($this->crypt->decrypt($value, $this->crypt->nonce()));
     }
 
+    public function unset(string $key) {
+        unset($_SESSION[$key]);
+    }
+
+
+    public function destroy() {
+        $_SESSION = [];
+        session_destroy();
+    }
 
     public function close() {
         session_write_close();
