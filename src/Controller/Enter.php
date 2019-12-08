@@ -6,22 +6,32 @@ namespace SimpleMVC\Controller;
 use League\Plates\Engine;
 use Psr\Http\Message\ServerRequestInterface;
 use SimpleMVC\Helper\SessionHandle;
+use SimpleMVC\Helper\LoginAction;
 
 class Enter implements ControllerInterface
 {
     protected $plates;
-    protected $session;
+    protected $login;
 
-    public function __construct(Engine $plates, SessionHandle $session)
+    public function __construct(Engine $plates, LoginAction $login)
     {
-        $this->session = $session;
+        $this->login = $login;
         $this->plates = $plates;
     }
 
     public function execute(ServerRequestInterface $request)
     {
         // exec login logics
-        
-        $this->session->close();
+        $username = filter_var($_POST['user'], FILTER_SANITIZE_STRING);//$_POST['user'];
+        echo $username;
+        die();
+        $password = $_POST['pwd'];
+
+        if ($this->login->loginUser($username, $password)) {
+            echo $this->plates->render('Dashboard'); 
+        } else {
+            http_response_code(401);
+            echo $this->plates->render('401');
+        }
     }
 }

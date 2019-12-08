@@ -9,7 +9,7 @@ $pdoConfig = require 'userPdo.php';
 
 return [
     'view_path' => 'src/View',
-
+    
     Engine::class => function(ContainerInterface $c) {
         return new Engine($c->get('view_path'));
     },
@@ -23,8 +23,8 @@ return [
         return SessionHandle::instance($c->get(CryptMsg::class), $c->get(CryptMsg::class)::nonce());
     },
 
-    LoginUser::class => function(ContainerInterface $c) {
-        return new LoginUser($c->get(SessionHandle::class), UtenteDb::class);
+    LoginAction::class => function(ContainerInterface $c) {
+        return new LoginAction($c->get(SessionHandle::class), UtenteDb::class);
     },
 
     // db
