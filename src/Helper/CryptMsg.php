@@ -27,7 +27,7 @@ class CryptMsg {
             self::$key = base64_decode(self::$key);
         }
 
-        self::nonce();
+        // self::nonce();
         return $this;
     }
 

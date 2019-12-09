@@ -8,6 +8,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use SimpleMVC\Helper\SessionHandle;
 use SimpleMVC\Helper\LoginAction;
 
+use SimpleMVC\Helper\CryptMsg;
+
 class Enter implements ControllerInterface
 {
     protected $plates;
@@ -23,8 +25,7 @@ class Enter implements ControllerInterface
     {
         // exec login logics
         $username = addslashes(filter_var($_POST['user'], FILTER_SANITIZE_STRING));//$_POST['user'];
-       /* echo $username;
-        die();*/
+        echo $username;
         $password = $_POST['pwd'];
 
         if ($this->login->loginUser($username, $password)) {
