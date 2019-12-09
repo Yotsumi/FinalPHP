@@ -35,12 +35,12 @@ class SessionHandle {
 
     public function set(string $key, string $value) {
         $value = $this->crypt->encrypt($value, $this->crypt->nonce());
-        $_SESSION[$key] = htmlspecialchars($value);
+        $_SESSION[$key] = $value;
     }
 
     public function get(string $key) :string{
         $value = $_SESSION[$key];
-        return htmlspecialchars($this->crypt->decrypt($value, $this->crypt->nonce()));
+        return $this->crypt->decrypt($value, $this->crypt->nonce());
     }
 
     public function unset(string $key) {
