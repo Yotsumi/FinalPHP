@@ -26,6 +26,10 @@ $path   = $request->getUri()->getPath();
 $method = $request->getMethod();
 $murl   = sprintf("%s %s", $method, $path);
 
+$regexString = '/^(\/article)\/([\w-]+)$/';
+if (preg_match($regexString, $path, $arres)){
+    $murl   = sprintf("%s %s", $method, $arres[1]);
+}
 $routes = require 'config/route.php';
 $controllerName = $routes[$murl] ?? Error404::class;
 
