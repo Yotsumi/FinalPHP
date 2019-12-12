@@ -7,8 +7,27 @@ class Utente {
     private $abilitato;
     private $hashUtente;
     
-    public function __construct(int $username, string $password, string $abilitato, string $hashUtente) {
+    public function __construct() {
         
+    }
+    
+    public static function arrayConstruct(array $data){
+        $instance = new self();
+        $instance->loadWithArray($data);
+        return $instance;
+    }
+    public static function defaultConstruct(string $username, string $password, bool $abilitato, string $hashUtente){
+        $instance = new self();
+        $instance->loadDefault($username,$password,$abilitato,$hashUtente);
+        return $instance;
+    }
+    private function loadWithArray($data){
+        if(count($data) > 0){
+            $this->setByArray($data);
+            return;
+        }
+    }
+    private function loadDefault(string $username, string $password, bool $abilitato, string $hashUtente){
         $this->username = $username;
         $this->password = $password;
         $this->abilitato = $abilitato;
@@ -38,6 +57,13 @@ class Utente {
     }
     public function setHashUtente(string $hashUtente) {
         $this->hashUtente = $hashUtente;
+    }
+    private function setByArray(array $data){
+        //TODO: CHECK THAT ALL THE ELEMENTS ARE PASSED.
+        $this->setHashUtente($data['hashUtente']);
+        $this->setUsername($data['username']);
+        $this->setPassword($data['password']);
+        $this->setAbilitato(filter_var($data['abilitato'], FILTER_VALIDATE_BOOLEAN));
     }
 
 }

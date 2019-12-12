@@ -6,3 +6,4 @@ config/sessionKey.key
 =======
 .phpunit.result.cache
 >>>>>>> 5c8a932b0cc44d6cdc73f39a3aeaedf866351588
+testUtente.php
