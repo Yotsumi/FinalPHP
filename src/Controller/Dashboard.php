@@ -21,14 +21,24 @@ class Enter implements ControllerInterface
         $this->plates = $plates;
     }
 
-    protected function getView() :string {
-        RegexHelper::setUrl('dashboard');
+    protected function getView(ServerRequestInterface $request) :string {
+        $regexString = RegexHelper::setUrl('dashboard');
+        $view = '';
+        if (preg_match($regexString, $request->getUri()->getPath(), $arres)){
+            $view = sprintf("%s %s", $method, $arres[1]);
+        }
+        if ($view == 'newArticle') {
+            // return ...
+        } else {
+            return 'dashboardMenu';
+        }
     }
 
     public function execute(ServerRequestInterface $request)
     {
         if ($this->login->isLoggedIn()) {
-            echo $this->plates->render($url);
+            $view = getView($request)
+            echo $this->plates->render('dashboard', ['view' => $view]);
             // get param to choose view to insert
         } else {
             $this->login->unlogUser(); // destroy session

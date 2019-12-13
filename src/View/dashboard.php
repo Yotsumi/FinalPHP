@@ -2,6 +2,6 @@
 
 <h1>Dashboard</h1>
 <div class="content">
-    <?php $this->insert( ?>)
+    <?php $this->insert($view); ?>)
 </div>
 
