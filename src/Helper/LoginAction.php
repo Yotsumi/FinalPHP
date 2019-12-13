@@ -70,4 +70,9 @@ class LoginAction {
         $this->session->set(SESSION_START_DATE, date("YmdHis"));
         $this->session->regen();
     }
+
+    // destroy session
+    public function unlogUser() :void {
+        $this->session->destroy();
+    }
 }
