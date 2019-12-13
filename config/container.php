@@ -5,6 +5,7 @@ use Psr\Container\ContainerInterface;
 use SimpleMVC\Helper\CryptMsg;
 use SimpleMVC\Helper\SessionHandle;
 use SimpleMVC\Model\UtenteDb;
+use SimpleMVC\Model\ArticoloDb;
 
 $pdoConfig = require 'userPdo.php';
 
@@ -33,9 +34,13 @@ return [
         return new UtenteDb($c->get('admin_db_manager'));
     },
 
+    ArticoloDb::class => function (ContainerInterface $c) {
+        return new UtenteDb($c->get('admin_db_manager'));
+    },
+
     // db
     'public_db_manager' => function () use ($pdoConfig){
-        return new PDO(         // Cambiare Helper\Test e inserire il namespace\classname della classe pdo
+        return new PDO(
             $pdoConfig['public']['dsn'], 
             $pdoConfig['public']['user'], 
             $pdoConfig['public']['password']
@@ -43,7 +48,7 @@ return [
     },
 
     'admin_db_manager' => function () use ($pdoConfig){
-        return new PDO(         // Cambiare Helper\Test e inserire il namespace\classname della classe pdo
+        return new PDO(
             $pdoConfig['admin']['dsn'], 
             $pdoConfig['admin']['user'], 
             $pdoConfig['admin']['password']

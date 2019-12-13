@@ -7,6 +7,7 @@ require 'vendor/autoload.php';
 use DI\ContainerBuilder;
 use SimpleMVC\Controller\Error404;
 use Zend\Diactoros\ServerRequestFactory;
+use SimpleMVC\Helper\RegexHelper;
 
 $builder = new ContainerBuilder();
 $builder->addDefinitions('config/container.php');
@@ -26,10 +27,10 @@ $path   = $request->getUri()->getPath();
 $method = $request->getMethod();
 $murl   = sprintf("%s %s", $method, $path);
 
-$regexString = '/^(\/article)\/([\w-]+)$/';
-if (preg_match($regexString, $path, $arres)){
+if (preg_match(RegexHelper::setUrl('article'), $path, $arres)){
     $murl   = sprintf("%s %s", $method, $arres[1]);
 }
+
 $routes = require 'config/route.php';
 $controllerName = $routes[$murl] ?? Error404::class;
 
