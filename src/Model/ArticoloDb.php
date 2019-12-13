@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace SimpleMVC\Model;
 class ArticoloDb {
+    //SELECT ALL() LIMITE DI 200 CARATTERI PER IL CONTENUTO
+
     public function selectFromTitle(string $title) :?object{
         try
         {
