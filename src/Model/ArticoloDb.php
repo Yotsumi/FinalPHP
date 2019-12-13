@@ -1,7 +1,9 @@
 <?php
 declare(strict_types=1);
 namespace SimpleMVC\Model;
-class ArticoloDb {
+use SimpleMVC\Helper\QueryHandler;
+
+class ArticoloDb extends QueryHandler {
     //SELECT ALL() LIMITE DI 200 CARATTERI PER IL CONTENUTO
 
     public function selectFromTitle(string $title) :?object{
@@ -17,5 +19,11 @@ class ArticoloDb {
         }catch(Exception $e){
             printf("Errore: %s\n", $e->getMessage());
         }
+    }
+
+    public function selectAll() :?array{
+        $query = "SELECT * FROM articolo";
+        $args = [];
+        return $this->selectQueries($query, $args);
     }
 }
