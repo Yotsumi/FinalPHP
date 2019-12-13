@@ -11,7 +11,7 @@ use SimpleMVC\Helper\RegexHelper;
 
 // use SimpleMVC\Helper\CryptMsg;
 
-class Enter implements ControllerInterface
+class Dashboard implements ControllerInterface
 {
     protected $login;
     protected $plates;
@@ -25,7 +25,7 @@ class Enter implements ControllerInterface
         $regexString = RegexHelper::setUrl('dashboard');
         $view = '';
         if (preg_match($regexString, $request->getUri()->getPath(), $arres)){
-            $view = sprintf("%s %s", $method, $arres[1]);
+            $view = sprintf("%s", $arres[2]);
         }
         if ($view == 'newArticle') {
             // return ...
@@ -36,8 +36,8 @@ class Enter implements ControllerInterface
 
     public function execute(ServerRequestInterface $request)
     {
-        if ($this->login->isLoggedIn()) {
-            $view = getView($request)
+        if (true){ //$this->login->isLoggedIn()) {
+            $view = getView($request);
             echo $this->plates->render('dashboard', ['view' => $view]);
             // get param to choose view to insert
         } else {
