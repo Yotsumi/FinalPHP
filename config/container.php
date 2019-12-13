@@ -6,6 +6,8 @@ use SimpleMVC\Helper\CryptMsg;
 use SimpleMVC\Helper\SessionHandle;
 use SimpleMVC\Model\UtenteDb;
 use SimpleMVC\Model\ArticoloDb;
+use SimpleMVC\Model\ArticoloClient;
+
 
 $pdoConfig = require 'userPdo.php';
 
@@ -35,7 +37,11 @@ return [
     },
 
     ArticoloDb::class => function (ContainerInterface $c) {
-        return new UtenteDb($c->get('admin_db_manager'));
+        return new ArticoloDb($c->get('admin_db_manager'));
+    },
+
+    ArticoloClient::class => function (ContainerInterface $c) {
+        return new ArticoloClient($c->get('public_db_manager'));
     },
 
     // db
