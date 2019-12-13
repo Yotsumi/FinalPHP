@@ -7,7 +7,7 @@ use PDOException;
 class UtenteDb {
     public $pdo;
 
-    public function __construct(PDO $pdo){
+    public function __construct(\PDO $pdo){
         $this->pdo = $pdo;
     }
 
