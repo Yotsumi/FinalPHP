@@ -1,6 +1,6 @@
 <?php $this->layout('layout', ['title' => 'Add Article']) ?>
 
-<form action="" method="POST">
+<form action="articlecurd/c" method="POST">
     Title:<br>
     <input type="text" name="title"><br>
     Date:<br>

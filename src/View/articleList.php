@@ -7,7 +7,7 @@
         <p><?=$this->e($article->getContenuto())?></p>
         <div><?=$this->e($article->getAutore())?></div>
         <div><?=$this->e($article->getData())?></div>
-        <input type="submit" formaction="dashboard/rmarticle" value="Delete">
+        <input type="submit" formaction="articlecrud/d" value="Delete">
         <input type="submit" formaction="dashboard/modarticle" value="Modify">
         </form>
     </div>

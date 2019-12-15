@@ -7,6 +7,6 @@ return [
     'POST /enter' => Controller\Enter::class,
     'GET /article' => Controller\Article::class,
     'GET /dashboard' => Controller\Dashboard::class,
-    'POST /utentecrud' => Controller\UtenteCrud::class,
+    'POST /utentecrud' => Controller\UserCrud::class,
     'POST /articlecrud' => Controller\ArticleCrud::class,
 ];

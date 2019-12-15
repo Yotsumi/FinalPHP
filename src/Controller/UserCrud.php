@@ -9,7 +9,7 @@ use SimpleMVC\Helper\LoginAction;
 use SimpleMVC\Model\ArticoloDb;
 
 
-class ArticleCrud extends AbstractCrud {
+class UserCrud extends AbstractCrud {
 
     protected function create(){
         

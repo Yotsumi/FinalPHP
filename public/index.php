@@ -27,7 +27,7 @@ $path   = $request->getUri()->getPath();
 $method = $request->getMethod();
 $murl   = sprintf("%s %s", $method, $path);
 
-if (preg_match(RegexHelper::setUrl('(article|dashboard)'), $path, $arres)){
+if (preg_match(RegexHelper::setUrl('(article|dashboard|articlecrud|usercrud)'), $path, $arres)){
     $murl   = sprintf("%s %s", $method, $arres[1]);
 }
 
