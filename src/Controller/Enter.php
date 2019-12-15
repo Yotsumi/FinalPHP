@@ -25,7 +25,6 @@ class Enter implements ControllerInterface
     {
         // exec login logics
         $username = addslashes(filter_var($_POST['user'], FILTER_SANITIZE_STRING));//$_POST['user'];
-        echo $username;
         $password = $_POST['pwd'];
 
         if ($this->login->loginUser($username, $password)) {

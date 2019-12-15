@@ -1,7 +1,7 @@
 <?php $this->layout('layout', ['title' => $title]) ?>
 
-<h1>Dashboard</h1>
+<h1><?= $this->e($title); ?></h1>
 <div class="content">
-    <?php $this->insert($view); ?>)
+    <?php $this->insert($view); ?>
 </div>
 
