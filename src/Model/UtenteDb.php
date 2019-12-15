@@ -12,14 +12,14 @@ class UtenteDb extends QueryHandler implements DbInterface {
         parent::__construct($pdo);
     }
 
-    // rinomina: selectByKey(string ...$key)
+    // rinomina: selectByKey(string ...$key) :?array
     public function selectFromUsername(string $username) :?array{ 
         $query = "SELECT * FROM utente WHERE username = :username;";
         $args = [':username' => $username];
         return $this->selectQueries($query, $args);
     }
 
-    // rinomina: selectAll()
+    // rinomina: selectAll() :?array;
     public function selectAllUsers() :?array{ 
         $query = "SELECT * FROM utente";
         $args = [];

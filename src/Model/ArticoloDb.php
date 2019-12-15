@@ -6,6 +6,7 @@ use SimpleMVC\Helper\QueryHandler;
 class ArticoloDb extends QueryHandler implements DbInterface {
     //SELECT ALL() LIMITE DI 200 CARATTERI PER IL CONTENUTO
 
+    // rinomina: selectByKey(string ...$key) :?array
     public function selectFromTitle(string $title) :?object{
         try
         {
@@ -21,6 +22,7 @@ class ArticoloDb extends QueryHandler implements DbInterface {
         }
     }
 
+    // perfetto: selectAll()
     public function selectAll() :?array{
         $query = "SELECT * FROM articolo";
         $args = [];
