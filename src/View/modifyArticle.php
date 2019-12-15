@@ -1,6 +1,6 @@
 <?php $this->layout('layout', ['title' => 'Modify Article']) ?>
 
-<form action="" method="POST">
+<form action="articlecrud/u" method="POST">
     Title:<br>
     <input type="text" name="title" value="<?=$this->e($article->getTitolo())?>"><br>
     Content:<br>
