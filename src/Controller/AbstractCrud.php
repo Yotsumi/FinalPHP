@@ -6,7 +6,6 @@ namespace SimpleMVC\Controller;
 use League\Plates\Engine;
 use Psr\Http\Message\ServerRequestInterface;
 use SimpleMVC\Helper\LoginAction;
-use SimpleMVC\Model\ArticoloDb;
 
 
 abstract class AbstractCrud implements ControllerInterface {
@@ -15,7 +14,7 @@ abstract class AbstractCrud implements ControllerInterface {
     protected $login;
     protected $table;
 
-    public function __construct(LoginAction $login, Engine $plates, ArticoloDb $table) {
+    public function __construct(LoginAction $login, Engine $plates, DbInterface $table) {
         $this->plates = $plates;
         $this->login  = $login;
         $this->table  = $table;
@@ -36,13 +35,19 @@ abstract class AbstractCrud implements ControllerInterface {
 
     public function execute(ServerRequestInterface $request)
     {
-        $action = $this->getCrudAction($request);
-        if ($action == 'c') {
-            $this->create();
-        } elseif ($action == 'u') {
-            $this->update();
-        } elseif ($action == 'd') {
-            $this->delete();
+        if (true){ //$this->login->isLoggedIn()) {
+            $action = $this->getCrudAction($request);
+            if ($action == 'c') {
+                $this->create();
+            } elseif ($action == 'u') {
+                $this->update();
+            } elseif ($action == 'd') {
+                $this->delete();
+            }
+        } else {
+            $this->login->unlogUser(); // destroy session
+            http_response_code(401);
+            echo $this->plates->render('401');
         }
     }
 }
