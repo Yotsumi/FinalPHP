@@ -40,20 +40,6 @@ class UtenteDb extends QueryHandler {
         $args = [':hashUtente' => $newHashUtente, ':newUsername' => $newUsername, ':password' => $newPassword, ':abilitato' => (int)$newAbilitato, ':username' => $findUsername]; //new abilitato lo converto in int perchè nel db tale colonna è di tipo tinyInt
         return $this->updateQueries($query, $args);
     }
-
-    private function selectQueries(string $query, array $args) :?array{
-        try
-        {
-            $sth = $this->pdo->prepare($query);
-            $sth->execute($args);
-            $sth->setFetchMode(PDO::FETCH_CLASS, Utente::class);
-            $utente = $sth->fetchAll();
-            return $utente;
-        }catch(Exception $e){
-            //printf("Errore: %s\n", $e->getMessage());
-            return null;
-        }
-    }
     
     public function deleteUser($username){
         try{
