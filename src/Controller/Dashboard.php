@@ -21,24 +21,41 @@ class Dashboard implements ControllerInterface
         $this->plates = $plates;
     }
 
-    protected function getView(ServerRequestInterface $request) :string {
+    protected function getView(ServerRequestInterface $request) :array {
         $regexString = RegexHelper::setUrl('dashboard');
-        $view = '';
+        $viewParam = '';
         if (preg_match($regexString, $request->getUri()->getPath(), $arres)){
-            $view = sprintf("%s", $arres[2]);
+            $viewParam = sprintf("%s", $arres[2]);
         }
-        if ($view == 'newArticle') {
-            // return ...
+
+        // articles
+        if ($viewParam == 'addarticle') {
+            return ['addArticle', 'Add Article'];
+        } elseif ($viewParam == 'listarticle') {
+            return ['articleList', 'Articles'];
+        } elseif ($viewParam == 'modarticle') {
+            return ['modifyArticle', 'Edit Article'];
+
+        // users
+        } elseif ($viewParam == 'adduser') {
+            return ['addUser', 'Add User'];
+        } elseif ($viewParam == 'listuser') {
+            return ['userList', 'Users'];
+        } elseif ($viewParam == 'moduser') {
+            return ['modifyUser', 'Edit User'];
+        
+        // dashboard
         } else {
-            return 'dashboardMenu';
+            return ['dashboardMenu', 'Dashboard'];
         }
     }
 
     public function execute(ServerRequestInterface $request)
     {
         if (true){ //$this->login->isLoggedIn()) {
-            $view = getView($request);
-            echo $this->plates->render('dashboard', ['view' => $view]);
+            $view = $this->getView($request);
+            echo $this->plates->render('dashboard', 
+                ['view' => $view[0], 'title' => $view[1] ]);
             // get param to choose view to insert
         } else {
             $this->login->unlogUser(); // destroy session
