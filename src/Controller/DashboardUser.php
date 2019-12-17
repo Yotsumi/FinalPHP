@@ -5,24 +5,24 @@ namespace SimpleMVC\Controller;
 
 use League\Plates\Engine;
 use Psr\Http\Message\ServerRequestInterface;
-use SimpleMVC\Model\ArticoloDb;
-use SimpleMVC\Model\Articolo;
+use SimpleMVC\Model\UtenteDb;
+use SimpleMVC\Model\Utente;
 use SimpleMVC\Helper\RegexHelper;
 
-class DashboardArticle implements ControllerInterface
+class DashboardUser implements ControllerInterface
 {
     protected $plates;
     protected $table;
 
 
-    public function __construct(Engine $plates, ArticoloDb $table)
+    public function __construct(Engine $plates, UtenteDb $table)
     {
         $this->plates = $plates;
         $this->table = $table;
     }
 
     protected function getView(ServerRequestInterface $request) :array {
-        $regexString = RegexHelper::setUrl('dashboardarticle');
+        $regexString = RegexHelper::setUrl('dashboarduser');
         $viewParam = '';
         if (preg_match($regexString, $request->getUri()->getPath(), $arres)){
             $viewParam = sprintf("%s", $arres[2]);
@@ -33,22 +33,16 @@ class DashboardArticle implements ControllerInterface
 
         // articles
         if (strlen($viewParam) < 1) {
-            $res =  ['articleList', 'Articles'];
+            $res =  ['userList', 'Users'];
             $args = $this->table->selectAll();
 
-        } elseif ($viewParam == 'addarticle') {
-            $res =  ['addArticle', 'Add Article'];
+        } elseif ($viewParam == 'adduser') {
+            $res =  ['addUser', 'Add User'];
 
         } else {
-            $args = $this->table->selectByKey([':titolo' => $viewParam]);
-            $res =  ['modifyArticle', 'Edit Article'];
+            $args = $this->table->selectByKey([':username' => $viewParam]);
+            $res =  ['modifyUser', 'Edit User'];
         } 
-
-        if (! is_null($args) && count($args) > 0){
-            for ($i = 0; $i < count($args); $i++) {
-                $args[$i] = new Articolo($args[$i]);
-            }
-        }
 
         array_push($res, $args);
         return $res;

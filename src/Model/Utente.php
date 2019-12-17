@@ -47,7 +47,7 @@ class Utente {
         $this->password = $password;
     }
     public function getAbilitato(): bool{
-        return $this->contenuto;
+        return $this->abilitato == 1;
     }
     public function setAbilitato(bool $abilitato) {
         $this->abilitato = $abilitato;

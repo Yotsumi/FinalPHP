@@ -39,35 +39,44 @@ class LoginAction {
 
     // method to control if user is logged
     public function isLoggedIn(): bool {
-        if ($this->session->get(SESSION_USERNAME) === null
-            || $this->session->get(SESSION_IP) != filter_var($_SERVER['REMOTE_ADDRESS'], FILTER_SANITIZE_IP)
-            || $this->session->get(SESSION_USER_ID) === null
-        ) {
+        if ($this->session->getLen() < 1) {
             return false;
         }
 
+        if ($this->session->get(self::SESSION_USERNAME) === null
+            || $this->session->get(self::SESSION_IP) != filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP)
+            || $this->session->get(self::SESSION_USER_ID) === null
+        ) {
+            return false;
+        }
+        $uname = $this->session->get(self::SESSION_USERNAME);
         // is this needed each time?
-        $user = $this->table->selectFromUsername($username);
-        if ($user->getUsername() != $this->session->get(SESSION_USERNAME)
-            || $user->getId() != $this->session->get(SESSION_USER_ID)) {
+        $user = $this->table->selectByKey([':username' => $uname]);
+        if (is_null($user) || is_null($user[0])) {
+            return false;
+        }
+        $user = $user[0];
+        // $user = Utente::arrayConstruct($user[0]);
+        if ($user->getUsername() != $this->session->get(self::SESSION_USERNAME)
+            || $user->getHashUtente() != $this->session->get(self::SESSION_USER_ID)) {
                 return false;
         }
 
         // after TTL seconds reset session id
-        if ($this->session->get(SESSION_START_DATE)->diff(new DateTime())->s > TTL) {
+    /*    if ($this->session->get(self::SESSION_START_DATE)->diff(new DateTime())->s > TTL) {
             $this->session->regen();
         }
-
+*/
         return true;
     }
 
 
     // store session data
     protected function setSession(Utente $user) : void  {
-        $this->session->set(SESSION_USER_ID, $user->getHashUtente());
-        $this->session->set(SESSION_USERNAME, $user->getUsername());
-        $this->session->set(SESSION_IP, $_SERVER['REMOTE_ADDR']);
-        $this->session->set(SESSION_START_DATE, date("YmdHis"));
+        $this->session->set(self::SESSION_USER_ID, $user->getHashUtente());
+        $this->session->set(self::SESSION_USERNAME, $user->getUsername());
+        $this->session->set(self::SESSION_IP, $_SERVER['REMOTE_ADDR']);
+        $this->session->set(self::SESSION_START_DATE, date("YmdHis"));
         $this->session->regen();
     }
 

@@ -1,13 +1,18 @@
 <?php $this->layout('layout', ['title' => 'Manage Users']) ?>
+<a href="/dashboard"><button>Back</button></a>
+<br/>
+<h1><?=$this->e($title)?></h1>
 
 <ul>
-<?php foreach($users as $user): ?>
+<?php foreach($args as $user): ?>
     <li>
-    <form method="post">
+    <form style="display:inline-block;" method="post">
         <div><?=$this->e($user->getUsername())?></div>
         <input type="submit" formaction="usercrud/d" value="Delete">
-        <input type="submit" formaction="dashboard/moduser" value="Modify">
     </form>
+    <a style="display:inline-block;" href="/dashboarduser/<?= $this->e($user->getUsername()) ?>">
+        <button>Edit</button>
+    </a>
     </li>
 <?php endforeach; ?>
 </ul>
