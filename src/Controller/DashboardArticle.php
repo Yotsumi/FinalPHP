@@ -38,12 +38,9 @@ class DashboardArticle implements ControllerInterface
 
         } elseif ($viewParam == 'addarticle') {
             $res =  ['addArticle', 'Add Article'];
-
-        } elseif ($viewParam == 'listarticle') {
-            $res =  ['articleList', 'Articles'];
-
+            
         } else {
-            $args = $this->table->selectByKey([':id' => $viewParam]);
+            $args = $this->table->selectByKey([':titolo' => $viewParam]);
             $res =  ['modifyArticle', 'Edit Article'];
         } 
 
@@ -61,8 +58,6 @@ class DashboardArticle implements ControllerInterface
     public function execute(ServerRequestInterface $request)
     {
         $view = $this->getView($request);
-        var_dump($view);
-        //die();
         echo $this->plates->render($view[0], [
             'title' => $view[1],
             'args' => $view[2]

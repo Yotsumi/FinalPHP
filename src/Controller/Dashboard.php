@@ -9,8 +9,6 @@ use SimpleMVC\Helper\SessionHandle;
 use SimpleMVC\Helper\LoginAction;
 use SimpleMVC\Helper\RegexHelper;
 
-// use SimpleMVC\Helper\CryptMsg;
-
 class Dashboard implements ControllerInterface
 {
     protected $login;
@@ -31,16 +29,8 @@ class Dashboard implements ControllerInterface
         $args;
         $res = [];
 
-        // articles
-        if ($viewParam == 'addarticle') {
-            $res =  ['addArticle', 'Add Article'];
-        } elseif ($viewParam == 'listarticle') {
-            $res =  ['articleList', 'Articles'];
-        } elseif ($viewParam == 'modarticle') {
-            $res =  ['modifyArticle', 'Edit Article'];
-
         // users
-        } elseif ($viewParam == 'adduser') {
+        if ($viewParam == 'adduser') {
             $res =  ['addUser', 'Add User'];
         } elseif ($viewParam == 'listuser') {
             $res =  ['userList', 'Users'];
@@ -56,7 +46,7 @@ class Dashboard implements ControllerInterface
 
     public function execute(ServerRequestInterface $request)
     {
-        if (true){ //$this->login->isLoggedIn()) {
+        if ($this->login->isLoggedIn()) {
             list($view, $title) = $this->getView($request);
             echo $this->plates->render('dashboard', 
                 ['view' => $view, 'title' => $title ]);

@@ -12,10 +12,10 @@ class SessionHandle {
 
     protected function __construct(CryptMsg $crypt, string $nonce) {
         // start session (if needed)
-        if (session_status() === PHP_SESSION_NONE ) {
+      /*  if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-       
+     */  
         $this->nonce = $nonce;
         $this->crypt = $crypt;
     }
@@ -23,6 +23,10 @@ class SessionHandle {
     public static function instance(CryptMsg $crypt, string $nonce) {
         if (is_null(self::$instance)) {
             self::$instance = new self($crypt, $nonce);
+        }
+        // start session (if needed)
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
         }
         
         return self::$instance;
