@@ -39,6 +39,10 @@ class LoginAction {
 
     // method to control if user is logged
     public function isLoggedIn(): bool {
+        if ($this->session->getLen() < 1) {
+            return false;
+        }
+
         if ($this->session->get(self::SESSION_USERNAME) === null
             || $this->session->get(self::SESSION_IP) != filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP)
             || $this->session->get(self::SESSION_USER_ID) === null
@@ -49,8 +53,7 @@ class LoginAction {
         // is this needed each time?
         $user = $this->table->selectByKey([':username' => $uname]);
         if (is_null($user) || is_null($user[0])) {
-            $this->unlogUser();
-            http_response_code(401);
+            return false;
         }
         $user = $user[0];
         // $user = Utente::arrayConstruct($user[0]);
@@ -75,8 +78,6 @@ class LoginAction {
         $this->session->set(self::SESSION_IP, $_SERVER['REMOTE_ADDR']);
         $this->session->set(self::SESSION_START_DATE, date("YmdHis"));
         $this->session->regen();
-        var_dump($_SESSION);
-        die();
     }
 
     // destroy session

@@ -47,6 +47,10 @@ class SessionHandle {
         return $this->crypt->decrypt($value, $this->crypt->nonce());
     }
 
+    public function getLen() :int {
+        return count($_SESSION);
+    }
+
     public function unset(string $key) {
         unset($_SESSION[$key]);
     }

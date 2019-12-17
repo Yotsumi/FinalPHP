@@ -28,8 +28,8 @@ class Enter implements ControllerInterface
         $password = $_POST['pwd'];
 
         if ($this->login->loginUser($username, $password)) {
-            echo $this->plates->render('dashboard',
-            ['view' => 'dashboardMenu', 'title' => 'Dashboard' ]); 
+            echo $this->plates->render('dashboardMenu',
+            ['title' => 'Dashboard' ]); 
         } else {
             http_response_code(401);
             echo $this->plates->render('401');
