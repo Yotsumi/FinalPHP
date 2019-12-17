@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace SimpleMVC\Controller;
 
-
 use League\Plates\Engine;
 use Psr\Http\Message\ServerRequestInterface;
 use SimpleMVC\Model\ArticoloDb;
@@ -47,8 +46,6 @@ class DashboardArticle implements ControllerInterface
             $args = $this->table->selectByKey([':id' => $viewParam]);
             $res =  ['modifyArticle', 'Edit Article'];
         } 
-
-
 
         if (! is_null($args) && count($args) > 0){
             for ($i = 0; $i < count($args); $i++) {

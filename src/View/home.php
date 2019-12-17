@@ -1,7 +1,6 @@
 <?php $this->layout('layout', ['title' => 'Home']) ?>
 
 <h1>Home page</h1>
-<?php var_dump($articles); die(); ?>
 <?php foreach($articles as $article): ?>
     <div style="display: inline-block; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; max-width: 20%; min-width: 10%; vertical-align: top;">
         <h2><a href="<?='/article/'.str_replace(' ', '-', $this->e($article->getTitolo()))?>">

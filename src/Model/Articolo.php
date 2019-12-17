@@ -9,7 +9,6 @@ class Articolo {
     private $data;
     
     public function __construct(array $array) {//int $id, string $titolo, string $contenuto, string $autore, string $data) {
-        
         $this->id = $array['id'];
         $this->titolo = $array['titolo'];
         $this->contenuto = $array['contenuto'];
@@ -18,7 +17,7 @@ class Articolo {
     }
 //TODO: check the lenght of each input (data already done)
     public function getId(): int{
-        return $this->id;
+        return (int) $this->id;
     }
     public function getTitolo(): string{
         return $this->titolo;

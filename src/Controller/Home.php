@@ -6,6 +6,7 @@ namespace SimpleMVC\Controller;
 use League\Plates\Engine;
 use Psr\Http\Message\ServerRequestInterface;
 use SimpleMVC\Model\ArticoloClient;
+use SimpleMVC\Model\Articolo;
 
 class Home implements ControllerInterface
 {
@@ -25,6 +26,12 @@ class Home implements ControllerInterface
         array_push($articles, new Articolo(2, "Titolo-2", "Contenuto-2", "Autore-2", "12/12/23"));
         */
         $articles = $this->article->selectAll();
+        if (! is_null($articles) && count($articles) > 0){
+            for ($i = 0; $i < count($articles); $i++) {
+                $articles[$i] = new Articolo($articles[$i]);
+            }
+        }
+
         echo $this->plates->render('home', ['articles' => $articles]);
     }
 }
