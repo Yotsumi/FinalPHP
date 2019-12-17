@@ -1,6 +1,6 @@
-<?php $this->layout('layout', ['title' => 'Manage Articles']) ?>
-
-<?php foreach($articles as $article): ?>
+<?php $this->layout('layout', ['title' => $title]) ?>
+<?php var_dump($args); die(); ?>
+<?php foreach($args as $article): ?>
     <div style="display: inline-block; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; max-width: 20%; min-width: 10%; vertical-align: top;">
         <form method="post">
         <h2><?=$this->e($article->getTitolo())?></h2>

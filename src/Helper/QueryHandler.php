@@ -11,21 +11,23 @@ class QueryHandler {
         $this->pdo = $pdo;
     }
 
-    protected function selectQueries(string $query, array $args) :?array{
+    protected function selectQueries(string $query, array $args, string $type) :?array{
         try
         {
             $sth = $this->pdo->prepare($query);
             $sth->execute($args);
-            $sth->setFetchMode(PDO::FETCH_CLASS, Utente::class);
-            $utente = $sth->fetchAll();
-            return $utente;
+// var_dump($query, $args, $type);
+            $sth->setFetchMode(PDO::FETCH_CLASS, $type);
+//var_dump($sth);
+            $obj = $sth->fetchAll();
+            return $obj;
         }catch(Exception $e){
             //printf("Errore: %s\n", $e->getMessage());
             return null;
         }
     }
 
-    protected function insertQueries(string $query, array $args){
+    protected function postQueries(string $query, array $args){
         try
         {
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -33,17 +35,6 @@ class QueryHandler {
             $sth->execute($args);
         }catch(PDOException $e){
             //printf("Errore: %s\n", $e->getMessage());
-            return $e->getMessage();
-        }
-    }
-
-    protected function updateQueries(string $query, array $args){
-        try{
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sth = $this->pdo->prepare($query);
-            $sth->execute($args);
-
-        }catch(PDOException $e){
             return $e->getMessage();
         }
     }

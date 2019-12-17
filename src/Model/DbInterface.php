@@ -11,10 +11,10 @@ interface DbInterface {
     //    can be passed as usual, for example: funcName($a, $b, $c);
 
     public function selectAll() :?array;
-    public function selectByKey(string ...$key) :?array;
+    public function selectByKey(array $key) :?array;
 
     // add return types if any
-    public function createRecord(string ...$data); 
-    public function updateRecord(string ...$data);
-    public function deleteRecord(string ...$key);  
+    public function createRecord(array $data); 
+    public function updateRecordById(array $data);
+    public function deleteRecordById(array $data);  
 }

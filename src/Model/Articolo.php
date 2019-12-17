@@ -8,13 +8,13 @@ class Articolo {
     private $autore;
     private $data;
     
-    public function __construct(int $id, string $titolo, string $contenuto, string $autore, string $data) {
+    public function __construct(array $array) {//int $id, string $titolo, string $contenuto, string $autore, string $data) {
         
-        $this->id = $id;
-        $this->titolo = $titolo;
-        $this->contenuto = $contenuto;
-        $this->autore = $autore;
-        $this->setData($data);
+        $this->id = $array['id'];
+        $this->titolo = $array['titolo'];
+        $this->contenuto = $array['contenuto'];
+        $this->autore = $array['autore'];
+        $this->setData($array['data']);
     }
 //TODO: check the lenght of each input (data already done)
     public function getId(): int{

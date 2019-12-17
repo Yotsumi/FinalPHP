@@ -28,26 +28,30 @@ class Dashboard implements ControllerInterface
             $viewParam = sprintf("%s", $arres[2]);
         }
 
+        $args;
+        $res = [];
+
         // articles
         if ($viewParam == 'addarticle') {
-            return ['addArticle', 'Add Article'];
+            $res =  ['addArticle', 'Add Article'];
         } elseif ($viewParam == 'listarticle') {
-            return ['articleList', 'Articles'];
+            $res =  ['articleList', 'Articles'];
         } elseif ($viewParam == 'modarticle') {
-            return ['modifyArticle', 'Edit Article'];
+            $res =  ['modifyArticle', 'Edit Article'];
 
         // users
         } elseif ($viewParam == 'adduser') {
-            return ['addUser', 'Add User'];
+            $res =  ['addUser', 'Add User'];
         } elseif ($viewParam == 'listuser') {
-            return ['userList', 'Users'];
+            $res =  ['userList', 'Users'];
         } elseif ($viewParam == 'moduser') {
-            return ['modifyUser', 'Edit User'];
-        
+            $res =  ['modifyUser', 'Edit User'];
         // dashboard
         } else {
-            return ['dashboardMenu', 'Dashboard'];
+            $res =  ['dashboardMenu', 'Dashboard'];
         }
+        $res[2] = $args;
+        return $res;
     }
 
     public function execute(ServerRequestInterface $request)
