@@ -27,12 +27,12 @@ class LoginAction {
 
     // method to check over db table and allow users
     public function loginUser(string $username, string $password) : bool {
-        $user = $this->table->selectFromUsername($username);
-        if (is_null($user)
-            || HashMsg::compareHash($password, $user->getPassword()) === false) {
+        $user = $this->table->selectByKey([':username' => $username]);
+        if (is_null($user) || is_null($user[0])
+            || HashMsg::compareHash($password, $user[0]->getPassword()) === false) {
             return false;
         }
-        $this->setSession($user);
+        $this->setSession($user[0]);
         return true;
     }
 
@@ -63,10 +63,10 @@ class LoginAction {
 
 
     // store session data
-    protected function setSession(User $user) : bool  {
-        $this->session->set(SESSION_USER_ID, $user->getId());
+    protected function setSession(Utente $user) : void  {
+        $this->session->set(SESSION_USER_ID, $user->getHashUtente());
         $this->session->set(SESSION_USERNAME, $user->getUsername());
-        $this->session->set(SESSION_IP, filter_var($_SERVER['REMOTE_ADDRESS'], FILTER_SANITIZE_IP));
+        $this->session->set(SESSION_IP, $_SERVER['REMOTE_ADDR']);
         $this->session->set(SESSION_START_DATE, date("YmdHis"));
         $this->session->regen();
     }
