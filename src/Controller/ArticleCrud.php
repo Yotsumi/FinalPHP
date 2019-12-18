@@ -11,6 +11,12 @@ use SimpleMVC\Model\ArticoloDb;
 
 class ArticleCrud extends AbstractCrud {
 
+    public function __construct(LoginAction $login, Engine $plates, ArticoloDb $table) {
+        $this->plates = $plates;
+        $this->login  = $login;
+        $this->table  = $table;
+    }
+
     protected function create(){
         
     }

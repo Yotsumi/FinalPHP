@@ -10,6 +10,6 @@ return [
     'GET /dashboard' => Controller\Dashboard::class,
     'GET /dashboardarticle' => Controller\DashboardArticle::class,
     'GET /dashboarduser' => Controller\DashboardUser::class,
-    'POST /utentecrud' => Controller\UserCrud::class,
+    'POST /usercrud' => Controller\UserCrud::class,
     'POST /articlecrud' => Controller\ArticleCrud::class,
 ];

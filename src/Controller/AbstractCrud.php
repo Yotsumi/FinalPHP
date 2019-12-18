@@ -6,19 +6,14 @@ namespace SimpleMVC\Controller;
 use League\Plates\Engine;
 use Psr\Http\Message\ServerRequestInterface;
 use SimpleMVC\Helper\LoginAction;
-
+use SimpleMVC\Helper\RegexHelper;
+use SimpleMVC\Model\DbInterface;
 
 abstract class AbstractCrud implements ControllerInterface {
 
     protected $plates;
     protected $login;
     protected $table;
-
-    public function __construct(LoginAction $login, Engine $plates, DbInterface $table) {
-        $this->plates = $plates;
-        $this->login  = $login;
-        $this->table  = $table;
-    }
 
     protected function getCrudAction(ServerRequestInterface $request) :string {
         $regexString = RegexHelper::setUrl('dashboard');
@@ -35,7 +30,7 @@ abstract class AbstractCrud implements ControllerInterface {
 
     public function execute(ServerRequestInterface $request)
     {
-        if (true){ //$this->login->isLoggedIn()) {
+        if ($this->login->isLoggedIn()) {
             $action = $this->getCrudAction($request);
             if ($action == 'c') {
                 $this->create();
