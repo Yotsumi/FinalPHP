@@ -10,11 +10,10 @@ use Articolo;
 // (it does not implement DbInterface, but ArticoloDb does)
 // but has methods named and declared as the select methods in DbInterface
 class ArticoloClient extends QueryHandler {
-
     
-    public function selectAll() :?array{
-        $query = "SELECT * FROM articolo";
-        $args = [];
+    public function selectDailyArticles() :?array{
+        $query = "SELECT * FROM articolo WHERE data = :data";
+        $args = [':data' => \date("Y-m-d")];
         return $this->selectQueries($query, $args, Articolo::class);
     }
     public function selectByKey(array $key) :?array{

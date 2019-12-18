@@ -5,7 +5,11 @@ use SimpleMVC\Helper\QueryHandler;
 
 class ArticoloDb extends ArticoloClient implements DbInterface {
     //SELECT ALL() LIMITE DI 200 CARATTERI PER IL CONTENUTO
-
+    public function selectAll() :?array{
+        $query = "SELECT * FROM articolo";
+        $args = [];
+        return $this->selectQueries($query, $args, Articolo::class);
+    }
     // rinomina: selectByKey(string ...$key) :?array
     public function createRecord(array $data){
         $query = "INSERT INTO articolo VALUES(:id, :titolo, :contenuto, :autore, :data)";
@@ -16,7 +20,7 @@ class ArticoloDb extends ArticoloClient implements DbInterface {
         $this->postQueries($query, $data);
     }
     public function deleteRecordById(array $data){
-        $query = "DELETE FROM articolo WHERE id = :id";
+        $query = "DELETE FROM articolo WHERE id = :id ";
         $this->postQueries($query, $data);
     } 
 }
