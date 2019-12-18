@@ -8,13 +8,22 @@ class Articolo {
     private $autore;
     private $data;
     
-    public function __construct(array $array) {//int $id, string $titolo, string $contenuto, string $autore, string $data) {
+    /*public function __construct (array $array) {//int $id, string $titolo, string $contenuto, string $autore, string $data) {
+        $this->id = $array['id'];
+        $this->titolo = $array['titolo'];
+        $this->contenuto = $array['contenuto'];
+        $this->autore = $array['autore'];
+        $this->setData($array['data']);
+    }*/
+
+    public function setByArray(array $array) {//int $id, string $titolo, string $contenuto, string $autore, string $data) {
         $this->id = $array['id'];
         $this->titolo = $array['titolo'];
         $this->contenuto = $array['contenuto'];
         $this->autore = $array['autore'];
         $this->setData($array['data']);
     }
+
 //TODO: check the lenght of each input (data already done)
     public function getId(): int{
         return (int) $this->id;
@@ -45,7 +54,7 @@ class Articolo {
         if(strtotime($data)){
             $this->data = $data;
         }else{
-            throw new Exception('Incorect data');
+            throw new Exception('Incorrect data');
         }
     }
 }

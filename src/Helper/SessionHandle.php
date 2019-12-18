@@ -11,11 +11,6 @@ class SessionHandle {
     protected $crypt;
 
     protected function __construct(CryptMsg $crypt, string $nonce) {
-        // start session (if needed)
-      /*  if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-     */  
         $this->nonce = $nonce;
         $this->crypt = $crypt;
     }

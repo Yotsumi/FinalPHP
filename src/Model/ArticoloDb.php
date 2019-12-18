@@ -10,6 +10,7 @@ class ArticoloDb extends ArticoloClient implements DbInterface {
         $args = [];
         return $this->selectQueries($query, $args, Articolo::class);
     }
+
     // rinomina: selectByKey(string ...$key) :?array
     public function createRecord(array $data){
         $query = "INSERT INTO articolo VALUES(:id, :titolo, :contenuto, :autore, :data)";

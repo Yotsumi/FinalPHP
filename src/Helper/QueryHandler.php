@@ -16,13 +16,10 @@ class QueryHandler {
         {
             $sth = $this->pdo->prepare($query);
             $sth->execute($args);
-// var_dump($query, $args, $type);
             $sth->setFetchMode(PDO::FETCH_CLASS, $type);
-//var_dump($sth);
             $obj = $sth->fetchAll();
             return $obj;
-        }catch(Exception $e){
-            //printf("Errore: %s\n", $e->getMessage());
+        } catch(Exception $e) {
             return null;
         }
     }
@@ -34,7 +31,6 @@ class QueryHandler {
             $sth = $this->pdo->prepare($query);
             $sth->execute($args);
         }catch(PDOException $e){
-            //printf("Errore: %s\n", $e->getMessage());
             return $e->getMessage();
         }
     }
