@@ -28,7 +28,7 @@ class DashboardArticle implements ControllerInterface
             $viewParam = sprintf("%s", $arres[2]);
         }
 
-        $args;
+        $args = [];
         $res = [];
 
         // articles

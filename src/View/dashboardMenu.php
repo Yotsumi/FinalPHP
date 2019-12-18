@@ -1,8 +1,8 @@
-<?php $this->layout('layout', ['title' => 'Dashboard']) ?>
+<?php $this->layout('layout', ['title' => $title]) ?>
 <form action="/logout" method="POST">
     <button>Logout</button>
 </form>
-<h1><?= $this->e('Dashboard'); ?></h1>
+<h1><?= $this->e($title); ?></h1>
 
 <h2>User Management</h2>
 <ul>

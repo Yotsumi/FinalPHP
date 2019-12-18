@@ -22,8 +22,9 @@ class Dashboard implements ControllerInterface
     public function execute(ServerRequestInterface $request)
     {
         if ($this->login->isLoggedIn()) {
+            $title = 'Dashboard';
             echo $this->plates->render('dashboardMenu', 
-                ['view' => $view, 'title' => $title ]);
+                ['title' => $title ]);
             // get param to choose view to insert
         } else {
             $this->login->unlogUser(); // destroy session
