@@ -22,7 +22,6 @@ class Logout implements ControllerInterface
     {
         $this->session->destroy();
         $this->session->close();
-       // die('Location: ' . $_SERVER['HTTP_HOST'] . '/');
         $home = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")
             . '://' . $_SERVER['HTTP_HOST'] . '/';
         header("Location: $home" );

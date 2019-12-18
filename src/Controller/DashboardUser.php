@@ -7,18 +7,20 @@ use League\Plates\Engine;
 use Psr\Http\Message\ServerRequestInterface;
 use SimpleMVC\Model\UtenteDb;
 use SimpleMVC\Model\Utente;
+use SimpleMVC\Helper\LoginAction;
 use SimpleMVC\Helper\RegexHelper;
 
 class DashboardUser implements ControllerInterface
 {
     protected $plates;
     protected $table;
+    protected $login;
 
-
-    public function __construct(Engine $plates, UtenteDb $table)
+    public function __construct(Engine $plates, UtenteDb $table, LoginAction $login)
     {
         $this->plates = $plates;
         $this->table = $table;
+        $this->login = $login;
     }
 
     protected function getView(ServerRequestInterface $request) :array {
@@ -51,10 +53,16 @@ class DashboardUser implements ControllerInterface
 
     public function execute(ServerRequestInterface $request)
     {
-        $view = $this->getView($request);
-        echo $this->plates->render($view[0], [
-            'title' => $view[1],
-            'args' => $view[2]
-        ]);
+        if ($this->login->isLoggedIn()) {
+            $view = $this->getView($request);
+            echo $this->plates->render($view[0], [
+                'title' => $view[1],
+                'args' => $view[2]
+            ]);
+        } else {
+            $this->login->unlogUser(); // destroy session
+            http_response_code(401);
+            echo $this->plates->render('401');
+        }
     }
 }

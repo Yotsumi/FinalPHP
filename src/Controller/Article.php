@@ -26,24 +26,20 @@ class Article implements ControllerInterface
         $articleTitle = str_replace("-", " ", $arres[2]);
         
         //TODO db call for take article
-/* 
-        $article = new Articolo(2, $articleTitle, "Contenuto", "Autore", "11/10/19");
-        */
         $article = $this->table->selectByKey([':titolo' => $articleTitle]);
-
-        //$article = null;
-        if ($article === null){
+        if ($article === null || count($article) == 0){
             echo $this->plates->render('article', ['articleNotFound' => true]);
             die();
         }
-        $article = new Articolo($article[0]);
+        $objArt = new Articolo();
+        $article = $objArt->setByArray($article[0]);
 
         echo $this->plates->render('article', [
-            'id' => $article->getId(),
-            'title' => $article->getTitolo(),
-            'autore' => $article->getAutore(),
-            'contenuto' => $article->getContenuto(),
-            'data' => $article->getData()
+            'id' => $objArt->getId(),
+            'title' => $objArt->getTitolo(),
+            'autore' => $objArt->getAutore(),
+            'contenuto' => $objArt->getContenuto(),
+            'data' => $objArt->getData()
             ]);
     }
 }
