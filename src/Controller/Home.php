@@ -28,7 +28,9 @@ class Home implements ControllerInterface
         $articles = $this->article->selectDailyArticles();
         if (! is_null($articles) && count($articles) > 0){
             for ($i = 0; $i < count($articles); $i++) {
-                $articles[$i] = new Articolo($articles[$i]);
+                $objArt = new Articolo();
+                $objArt->setByArray($articles[$i]);
+                $articles[$i] = $objArt;
             }
         }
 
