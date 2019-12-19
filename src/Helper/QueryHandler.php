@@ -25,13 +25,8 @@ class QueryHandler {
     }
 
     protected function postQueries(string $query, array $args){
-        try
-        {
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sth = $this->pdo->prepare($query);
-            $sth->execute($args);
-        }catch(PDOException $e){
-            return $e->getMessage();
-        }
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sth = $this->pdo->prepare($query);
+        $sth->execute($args);
     }
 }
