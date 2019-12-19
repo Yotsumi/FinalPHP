@@ -7,24 +7,24 @@ use League\Plates\Engine;
 use Psr\Http\Message\ServerRequestInterface;
 use SimpleMVC\Model\ArticoloClient;
 use SimpleMVC\Model\Articolo;
+use SimpleMVC\Helper\SessionHandle;
 
 class Home implements ControllerInterface
 {
     protected $plates;
     protected $article;
+    protected $session;
 
-    public function __construct(Engine $plates, ArticoloClient $article)
+    public function __construct(Engine $plates, ArticoloClient $article, SessionHandle $session)
     {
         $this->plates  = $plates;
         $this->article = $article;
+        $this->session = $session;
     }
 
     public function execute(ServerRequestInterface $request)
     {
-        $articles = [];     //call to db
-        /* array_push($articles, new Articolo(2, "Titolo con caràttèrì spécialò", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin convallis ex interdum, tincidunt neque vel, gravida lorem. Vestibulum at nunc non libero bibendum condimentum. Sed a facilisis enim, sed vestibulum ex. Mauris dignissim magna libero, et vehicula risus fringilla a. Vivamus nibh mauris, elementum at commodo sed, lacinia vel nulla. Duis et libero porttitor, sollicitudin nisl a, pulvinar elit. Morbi condimentum orci eget pretium bibendum. Suspendisse luctus mattis dui, ac facilisis enim eleifend quis. Vestibulum at convallis ligula, vitae tempor nisl. Donec scelerisque rutrum ullamcorper. Cras tincidunt pretium consequat. Quisque est nisl, ornare at sapien id, sollicitudin lobortis ex. Morbi.", "Autore", "12/12/23"));
-        array_push($articles, new Articolo(2, "Titolo-2", "Contenuto-2", "Autore-2", "12/12/23"));
-        */
+        $articles = [];
         $articles = $this->article->selectDailyArticles();
         if (! is_null($articles) && count($articles) > 0){
             for ($i = 0; $i < count($articles); $i++) {
@@ -34,6 +34,17 @@ class Home implements ControllerInterface
             }
         }
 
-        echo $this->plates->render('home', ['articles' => $articles]);
+        $btn = ['Login' => '/login'];
+        $user = '';
+        if ($this->session->getLen() > 0) {
+            $btn = ['Dashboard' => '/dashboard'];
+            $user = $this->session->get(SessionHandle::SESSION_USERNAME);
+        }
+
+        echo $this->plates->render('home', [
+            'articles' => $articles, 
+            'btn' => $btn,
+            'user' => $user
+        ]);
     }
 }

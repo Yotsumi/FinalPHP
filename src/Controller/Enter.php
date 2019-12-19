@@ -24,12 +24,11 @@ class Enter implements ControllerInterface
     public function execute(ServerRequestInterface $request)
     {
         // exec login logics
-        $username = addslashes(filter_var($_POST['user'], FILTER_SANITIZE_STRING));//$_POST['user'];
+        $username = addslashes(filter_var($_POST['user'], FILTER_SANITIZE_STRING));
         $password = $_POST['pwd'];
 
         if ($this->login->loginUser($username, $password)) {
-            echo $this->plates->render('dashboardMenu',
-            ['title' => 'Dashboard' ]); 
+            header('Location: http://'.$_SERVER["HTTP_HOST"]. "/dashboard"); 
         } else {
             http_response_code(401);
             echo $this->plates->render('401');
