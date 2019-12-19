@@ -17,7 +17,7 @@ final class HomeTest extends TestCase
         $builder = new ContainerBuilder();
         $builder->addDefinitions('config/container.php');
         $container = $builder->build();
-        $this->db = $container->get(ArticoloCLient::class);
+        $this->db = $container->get(ArticoloClient::class);
         $this->articles = $this->db->selectDailyArticles();
 
         $this->plates = new Engine('src/View');
