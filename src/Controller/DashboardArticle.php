@@ -42,7 +42,7 @@ class DashboardArticle implements ControllerInterface
             $res =  ['addArticle', 'Add Article'];
 
         } else {
-            $args = $this->table->selectByKey([':titolo' => $viewParam]);
+            $args = $this->table->selectByKey([':titolo' => str_replace('-', ' ', $viewParam)]);
             $res =  ['modifyArticle', 'Edit Article'];
             if (! is_null($args) && count($args) > 0){
                 $objArt = new Articolo();
