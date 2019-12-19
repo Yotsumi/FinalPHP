@@ -26,7 +26,7 @@ class UserCrud extends AbstractCrud {
                 ':abilitato' => true,
                 ':hashUtente' => md5($_POST['crudUsername'])
             ]);
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             echo '<script>alert("Errore creazione utente"); location.href = "http://'.$_SERVER["HTTP_HOST"].'/dashboard"</script>';
             exit;
         }
@@ -44,7 +44,7 @@ class UserCrud extends AbstractCrud {
                 ':hashUtente' => md5($_POST['crudUsername']),
                 ':username' => $username
             ]);
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             echo '<script>alert("Errore creazione utente"); location.href = "http://'.$_SERVER["HTTP_HOST"].'/dashboard"</script>';
             exit;
         }
@@ -57,7 +57,7 @@ class UserCrud extends AbstractCrud {
             $this->table->deleteRecordById([
                 ':username' => $_POST['usernameCrud'],
             ]);
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             echo '<script>alert("Errore creazione utente"); location.href = "http://'.$_SERVER["HTTP_HOST"].'/dashboard"</script>';
             exit;
         }

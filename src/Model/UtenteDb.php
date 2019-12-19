@@ -26,7 +26,6 @@ class UtenteDb extends QueryHandler implements DbInterface {
 
     // rinomina: createRecord(...$data) 
     public function createRecord(array $data){
-        
         $query = "INSERT INTO utente VALUES(:hashUtente, :username, :password, :abilitato)";
         return $this->postQueries($query, $data);
     }
