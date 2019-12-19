@@ -11,7 +11,7 @@
         </a>
         <form method="post">
             <input type="submit" formaction="/articlecrud/d" value="Delete">
-            <input type="hidden" name="articleCrud" value="<?=$this->e($article->getId())?>">
+            <input type="hidden" name="id" value="<?=$this->e($article->getId())?>">
             <p><?=$this->e($article->getContenuto())?></p>
             <div><?=$this->e($article->getAutore())?></div>
             <div><?=$this->e($article->getData())?></div>

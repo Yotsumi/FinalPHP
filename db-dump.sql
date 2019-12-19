@@ -27,12 +27,13 @@ DROP TABLE IF EXISTS `articolo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `articolo` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `titolo` varchar(30) NOT NULL,
   `contenuto` varchar(200) NOT NULL,
   `autore` varchar(30) NOT NULL,
   `data` date NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `titolo` (`titolo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

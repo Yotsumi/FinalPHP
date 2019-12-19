@@ -13,7 +13,7 @@ class ArticoloDb extends ArticoloClient implements DbInterface {
 
     // rinomina: selectByKey(string ...$key) :?array
     public function createRecord(array $data){
-        $query = "INSERT INTO articolo VALUES(:id, :titolo, :contenuto, :autore, :data)";
+        $query = "INSERT INTO articolo (titolo, contenuto, autore, data) VALUES(:titolo, :contenuto, :autore, :data)";
         $this->postQueries($query, $data);
     }
     public function updateRecordById(array $data){
