@@ -8,14 +8,17 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use SimpleMVC\Controller\Home;
 use SimpleMVC\Model\ArticoloClient;
+use DI\ContainerBuilder;
 
 final class HomeTest extends TestCase
 {
     public function setUp(): void
     {
-        $this->db = new ArticoloClient(
-                $this->getMockBuilder(\PDO::class)->getMock()
-        );
+        $builder = new ContainerBuilder();
+        $builder->addDefinitions('config/container.php');
+        $container = $builder->build();
+        $this->db = $container->get(ArticoloCLient::class);
+        $this->articles = $this->db->selectDailyArticles();
 
         $this->plates = new Engine('src/View');
         $this->home = new Home($this->plates, $this->db);
@@ -24,7 +27,7 @@ final class HomeTest extends TestCase
 
     public function testExecuteRenderHomeView(): void
     {
-        $this->expectOutputString($this->plates->render('home'));
+        $this->expectOutputString($this->plates->render('home', ['articles' => $this->articles]));
         $this->home->execute($this->request);
     }
 }
