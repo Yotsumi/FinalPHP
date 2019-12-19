@@ -28,7 +28,7 @@ class LoginAction {
     // method to check over db table and allow users
     public function loginUser(string $username, string $password) : bool {
         $user = $this->table->selectByKey([':username' => $username]);
-        if (is_null($user) || is_null($user[0])
+        if (is_null($user) || count($user) < 1
             || HashMsg::compareHash($password, $user[0]->getPassword()) === false
             || $user[0]->getAbilitato() == 0) {
             return false;
