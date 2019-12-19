@@ -1,9 +1,7 @@
 <?php 
 $title = 'Home';
 $this->layout('layout', ['title' => $title]) ?>
-<a href="/login"><button>Login</button></a>
-<br/>
-<h1><?= $this->e($title) ?></h1>
+<?php $this->insert('navbar', ['buttons' => $btn, 'user' => $user]); ?>
 
 <?php foreach($articles as $article): ?>
     <div style="display: inline-block; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; max-width: 20%; min-width: 10%; vertical-align: top;">

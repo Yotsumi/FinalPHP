@@ -32,6 +32,7 @@ class DashboardUser implements ControllerInterface
 
         $args = [];
         $res = [];
+        $backPath = '/dashboard';
 
         // articles
         if (strlen($viewParam) < 1) {
@@ -44,20 +45,23 @@ class DashboardUser implements ControllerInterface
         } else {
             $args = $this->table->selectByKey([':username' => $viewParam]);
             $res =  ['modifyUser', 'Edit User'];
+            $backPath = '/dashboarduser';
         } 
 
-        array_push($res, $args);
+        array_push($res, $args, $backPath);
         return $res;
     }
 
 
     public function execute(ServerRequestInterface $request)
     {
-        if ($this->login->isLoggedIn()) {
-            $view = $this->getView($request);
-            echo $this->plates->render($view[0], [
-                'title' => $view[1],
-                'args' => $view[2]
+        if ($this->login->isLoggedIn() && $this->login->getIsAdmin() === '1') {
+            list($view, $title, $args, $path) = $this->getView($request);
+            echo $this->plates->render($view, [
+                'title' => $title,
+                'args'  => $args, 
+                'user'  => $this->login->getUsername(),
+                'btn'   => ['Back' => $path]
             ]);
         } else {
             $this->login->unlogUser(); // destroy session

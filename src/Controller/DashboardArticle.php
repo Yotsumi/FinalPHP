@@ -31,10 +31,11 @@ class DashboardArticle implements ControllerInterface
         }
 
         $args = [];
-        $res = [];
+        $res  = [];
+        $backPath = '/dashboard';
 
         // articles
-        if (strlen($viewParam) < 1) {
+        if (strlen($viewParam) == 0) {
             $res =  ['articleList', 'Articles'];
             $args = $this->table->selectAll();
 
@@ -48,11 +49,11 @@ class DashboardArticle implements ControllerInterface
                 $objArt = new Articolo();
                 $objArt->setByArray($args[0]);
                 $args = $objArt;
-                
             }
+            $backPath = '/dashboardarticle';
         } 
 
-        array_push($res, $args);
+        array_push($res, $args, $backPath);
         return $res;
     }
 
@@ -60,10 +61,12 @@ class DashboardArticle implements ControllerInterface
     public function execute(ServerRequestInterface $request)
     {
         if ($this->login->isLoggedIn()) {
-            $view = $this->getView($request);
-            echo $this->plates->render($view[0], [
-                'title' => $view[1],
-                'args' => $view[2]
+            list($view, $title, $args, $path) = $this->getView($request);
+            echo $this->plates->render($view, [
+                'title' => $title,
+                'args'  => $args, 
+                'user'  => $this->login->getUsername(),
+                'btn'   => ['Back' => $path]
             ]);
         } else {
             $this->login->unlogUser(); // destroy session

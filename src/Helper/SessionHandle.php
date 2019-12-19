@@ -7,6 +7,13 @@ use SimpleMVC\Helper\CryptMsg;
 
 class SessionHandle {
 
+    const SESSION_USER_ID  = 'userid';
+    const SESSION_USERNAME = 'username';
+    const SESSION_START_DATE= 'started';
+    const SESSION_IP = 'ip';
+    const IS_ADMIN   = 'isadmin';
+    const TTL = 1500; // session validity in seconds
+
     protected static $instance;
     protected $crypt;
 

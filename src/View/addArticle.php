@@ -1,6 +1,6 @@
 <?php $this->layout('layout', ['title' => 'Add Article']) ?>
-<a href="/dashboard"><button>Back</button></a>
-<br/>
+<?php $this->insert('navbar', ['buttons' => $btn, 'user' => $user]); ?>
+
 <h1><?=$this->e($title)?></h1>
 
 <form action="/articlecrud/c" method="POST">
