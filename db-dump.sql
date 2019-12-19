@@ -59,7 +59,7 @@ CREATE TABLE `utente` (
   `username` varchar(50) NOT NULL,
   `password` char(60) NOT NULL,
   `abilitato` tinyint(1) NOT NULL,
-  PRIMARY KEY (`hashUtente`),
+  PRIMARY KEY (`hashUtente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
