@@ -18,7 +18,8 @@ class ArticleCrud extends AbstractCrud {
     }
 
     protected function create(){
-        
+        var_dump($_POST);
+        exit;
     }
 
     protected function update(){

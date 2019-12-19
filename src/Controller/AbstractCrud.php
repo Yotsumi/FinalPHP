@@ -16,7 +16,7 @@ abstract class AbstractCrud implements ControllerInterface {
     protected $table;
 
     protected function getCrudAction(ServerRequestInterface $request) :string {
-        $regexString = RegexHelper::setUrl('dashboard');
+        $regexString = RegexHelper::setUrl('articlecrud');
         $action = '';
         if (preg_match($regexString, $request->getUri()->getPath(), $arres)){
             $action = sprintf("%s", $arres[2]);
