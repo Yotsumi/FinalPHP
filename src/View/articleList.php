@@ -10,10 +10,11 @@
             <button style="float:left; margin-right:0.5em;">Edit</button>
         </a>
         <form method="post">
-        <input type="submit" formaction="/articlecrud/d" value="Delete">
-        <p><?=$this->e($article->getContenuto())?></p>
-        <div><?=$this->e($article->getAutore())?></div>
-        <div><?=$this->e($article->getData())?></div>
+            <input type="submit" formaction="/articlecrud/d" value="Delete">
+            <input type="hidden" name="articleCrud" value="<?=$this->e($article->getId())?>">
+            <p><?=$this->e($article->getContenuto())?></p>
+            <div><?=$this->e($article->getAutore())?></div>
+            <div><?=$this->e($article->getData())?></div>
         </form>
     </div>
 <?php endforeach; ?>
