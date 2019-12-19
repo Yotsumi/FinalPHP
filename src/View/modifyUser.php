@@ -11,6 +11,7 @@
     <input type="password" name="crudPassword" value="<?=$this->e($args[0]->getPassword())?>">
     <br>
     <input type="hidden" name="crudId" value="<?= $this->e($args[0]->getHashUtente()) ?>">
+    <input type="hidden" name="oldUsername" value="<?= $this->e($args[0]->getUsername()) ?>">
     <label>Attivo
         <input type="checkbox" value="1" name="attivo" <?= ($args[0]->getAbilitato() == 1)? 'checked' : '' ?>/>
     </label>

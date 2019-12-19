@@ -30,7 +30,6 @@ class ArticleCrud extends AbstractCrud {
             echo '<script>alert("Errore inserimento articolo"); location.href = "http://'.$_SERVER["HTTP_HOST"].'/dashboard"</script>';
             exit;
         }
-        echo 'Funzia';
         header('Location: http://'.$_SERVER["HTTP_HOST"]. '/dashboard');
         exit;
     }
@@ -48,7 +47,6 @@ class ArticleCrud extends AbstractCrud {
             echo '<script>alert("Errore modifica articolo"); location.href = "http://'.$_SERVER["HTTP_HOST"].'/dashboard"</script>';
             exit;
         }
-        echo 'Funzia';
         header('Location: http://'.$_SERVER["HTTP_HOST"]. '/dashboard');
         exit;
     }
@@ -62,7 +60,6 @@ class ArticleCrud extends AbstractCrud {
             echo '<script>alert("Errore eliminazione articolo"); location.href = "http://'.$_SERVER["HTTP_HOST"].'/dashboard"</script>';
             exit;
         }
-        echo 'Funzia';
         header('Location: http://'.$_SERVER["HTTP_HOST"]. '/dashboard');
         exit;
     }
