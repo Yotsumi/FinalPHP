@@ -39,7 +39,9 @@ class Article implements ControllerInterface
             'title' => $objArt->getTitolo(),
             'autore' => $objArt->getAutore(),
             'contenuto' => $objArt->getContenuto(),
-            'data' => $objArt->getData()
+            'data' => $objArt->getData(),
+
+            'articleNotFound' => false
             ]);
     }
 }
