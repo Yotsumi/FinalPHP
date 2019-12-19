@@ -3,7 +3,7 @@
 <br/>
 <h1><?= $this->e($title) ?></h1>
 
-<form action="articlecrud/u" method="POST">
+<form action="/articlecrud/u" method="POST">
     Title:<br>
     <input type="text" name="title" value="<?=$this->e($args->getTitolo())?>"><br>
     Content:<br>

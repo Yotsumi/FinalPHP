@@ -3,7 +3,7 @@
 <br/>
 <h1><?=$this->e($title)?></h1>
 
-<form action="articlecurd/c" method="POST">
+<form action="/articlecrud/c" method="POST">
     Title:<br>
     <input type="text" name="title"><br>
     Date:<br>

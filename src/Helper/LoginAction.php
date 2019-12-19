@@ -14,7 +14,7 @@ class LoginAction {
     const SESSION_START_DATE= 'started';
     const SESSION_IP = 'ip';
 
-    const TTL = 3600; // session validity in seconds
+    const TTL = 1500; // session validity in seconds
     protected $session;
     protected $table;
     
@@ -29,7 +29,8 @@ class LoginAction {
     public function loginUser(string $username, string $password) : bool {
         $user = $this->table->selectByKey([':username' => $username]);
         if (is_null($user) || is_null($user[0])
-            || HashMsg::compareHash($password, $user[0]->getPassword()) === false) {
+            || HashMsg::compareHash($password, $user[0]->getPassword()) === false
+            || $user[0]->getAbilitato() == 0) {
             return false;
         }
         $this->setSession($user[0]);
@@ -63,10 +64,13 @@ class LoginAction {
         }
 
         // after TTL seconds reset session id
-    /*    if ($this->session->get(self::SESSION_START_DATE)->diff(new DateTime())->s > TTL) {
+        $datetime1 = strtotime($this->session->get(self::SESSION_START_DATE));//start time
+        $datetime2 = strtotime(date('Y-m-d h:i:s'));//end time
+        
+        if ($datetime2 - $datetime1 > self::TTL) {
             $this->session->regen();
+            $this->session->set(self::SESSION_START_DATE, date('Y-m-d h:i:s'));
         }
-*/
         return true;
     }
 
@@ -76,7 +80,7 @@ class LoginAction {
         $this->session->set(self::SESSION_USER_ID, $user->getHashUtente());
         $this->session->set(self::SESSION_USERNAME, $user->getUsername());
         $this->session->set(self::SESSION_IP, $_SERVER['REMOTE_ADDR']);
-        $this->session->set(self::SESSION_START_DATE, date("YmdHis"));
+        $this->session->set(self::SESSION_START_DATE, date('Y-m-d h:i:s'));
         $this->session->regen();
     }
 

@@ -6,13 +6,19 @@ namespace SimpleMVC\Controller;
 use League\Plates\Engine;
 use Psr\Http\Message\ServerRequestInterface;
 use SimpleMVC\Helper\LoginAction;
-use SimpleMVC\Model\UserDb;
+use SimpleMVC\Model\UtenteDb;
 
 
 class UserCrud extends AbstractCrud {
 
+    public function __construct(LoginAction $login, Engine $plates, UtenteDb $table) {
+        $this->plates = $plates;
+        $this->login  = $login;
+        $this->table  = $table;
+    }
+
     protected function create(){
-        $this->table->createUserByDefault(string $hashUtente, string $username, string $password, bool $abilitato)
+        $this->table->createRecord($data);
     }
 
     protected function update(){

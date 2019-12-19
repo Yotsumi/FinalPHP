@@ -3,7 +3,7 @@
 <br/>
 <h1><?= $this->e($title) ?></h1>
 
-<form action="usercrud/u" method="POST">
+<form action="/usercrud/u" method="POST">
     Username:<br>
     <input type="text" name="crudUsername" value="<?=$this->e($args[0]->getUsername()) ?>">
     <br>
