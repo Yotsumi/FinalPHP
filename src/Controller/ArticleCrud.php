@@ -29,10 +29,11 @@ class ArticleCrud extends AbstractCrud {
     protected function create(){
         try{
             $this->table->createRecord([
-                ':titolo' => str_replace('-', ' ', $this->post['title']),
+                ':titolo' => str_replace('%20', ' ', $this->post['title']),
                 ':data' => $this->post['data'],
                 ':contenuto' => $this->post['content'],
                 ':autore' => $this->post['author']
+
             ]);
         }catch(\PDOException $e){
             echo '<script>alert("Errore inserimento articolo"); location.href = "http://'.$_SERVER["HTTP_HOST"].'/dashboard"</script>';

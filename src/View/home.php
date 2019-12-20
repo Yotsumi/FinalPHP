@@ -2,6 +2,7 @@
 $title = 'Home';
 $this->layout('layout', ['title' => $title]) ?>
 <?php $this->insert('navbar', ['buttons' => $btn, 'user' => $user]); ?>
+
 <?php if (empty($articles)): ?>
     <p>No articles found</p>
 <?php else: ?>
@@ -16,3 +17,4 @@ $this->layout('layout', ['title' => $title]) ?>
         </div>
     <?php endforeach; ?>
 <?php endif; ?>
+

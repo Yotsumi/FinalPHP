@@ -23,7 +23,7 @@ class Article implements ControllerInterface
     public function execute(ServerRequestInterface $request)
     {
         preg_match(RegexHelper::setUrl('article'), $_SERVER['PATH_INFO'], $arres);
-        $articleTitle = str_replace("-", " ", $arres[2]);
+        $articleTitle = str_replace("%20", " ", $arres[2]);
         
         //TODO db call for take article
         $article = $this->table->selectByKey([':titolo' => $articleTitle]);
