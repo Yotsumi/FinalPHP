@@ -20,24 +20,28 @@ final class HomeTest extends TestCase
         $builder->addDefinitions('config/container.php');
         $container = $builder->build();
         $this->articles = [];
-       /* $this->articles[0]->setByArray([
-            'id' => 1,
-            'titolo' => 'titolo',
-            'contenuto' => 'test test',
-            'autore' => 'Auth Ore',
-            'data' => date("Y-m-d")
-        ]);
-*/
-        $this->db  = //$container->get(ArticoloCLient::class);
-            (new class ($container->get('public_db_manager')) extends ArticoloCLient {
+       
+        $this->db  = /*(new class ($container->get('public_db_manager')) extends ArticoloCLient {
                 public function __construct(\PDO $pdo){}
                 public function selectDailyArticles() :?array{ 
                     return [];
                 }
             });
+            $this->getMockBuilder(
+                AricoloClient::class/*,
+                [],
+                [$container->get('public_db_manager')]
+            )->getMock();*/
+            $this->getMockBuilder(AricoloClient::class)
+                     ->disableOriginalConstructor()
+                    // ->disableOriginalClone()
+                    // ->disableArgumentCloning()
+                    // ->disallowMockingUnknownTypes()
+                     ->getMock();
+        $this->db->setMethods(['selectDailyArticles'])
+        ->willReturn([]);
 
         $this->plates = new Engine('src/View');
-        //$this->db->selectDailyArticles();
 
         $this->home   = new Home(
             $this->plates, 

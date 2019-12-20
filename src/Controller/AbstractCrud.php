@@ -8,13 +8,16 @@ use Psr\Http\Message\ServerRequestInterface;
 use SimpleMVC\Helper\LoginAction;
 use SimpleMVC\Helper\RegexHelper;
 use SimpleMVC\Model\DbInterface;
+use SimpleMVC\Helper\PostDataHelper;
+
 
 abstract class AbstractCrud implements ControllerInterface {
 
     protected $plates;
     protected $login;
     protected $table;
-    protected $request;
+    protected $post;
+
 
     protected function getCrudAction(ServerRequestInterface $request) :string {
         $regexString = RegexHelper::setUrl('\w*');
@@ -31,7 +34,9 @@ abstract class AbstractCrud implements ControllerInterface {
 
     public function execute(ServerRequestInterface $request)
     {
-        $this->request = $request;
+        $this->post = $request->getParsedBody();
+        PostDataHelper::checkPostData($this->post);
+
         if ($this->login->isLoggedIn()) {
             $action = $this->getCrudAction($request);
             if ($action == 'c') {

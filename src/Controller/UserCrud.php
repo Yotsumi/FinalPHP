@@ -27,22 +27,25 @@ class UserCrud extends AbstractCrud {
 
     // check if password needs hashing
     protected function getPwd() :string {
-        $pwd = $_POST['crudPassword'];
-        if (! hash_equals($_POST['oldPassword'], $_POST['crudPassword'])) {
-            $pwd = HashMsg::hash($_POST['crudPassword']);
+        $pwd = $this->post['crudPassword'];
+        if (! hash_equals($this->post['oldPassword'], $this->post['crudPassword'])) {
+            $pwd = HashMsg::hash($this->post['crudPassword']);
         }
         return $pwd;
     }
 
     protected function create(){
+        var_dump($this->post);
+       // die();
         try{
             $this->table->createRecord([
-                ':username'  => $_POST['crudUsername'],
-                ':password'  => HashMsg::hash($_POST['crudPassword']),
-                ':abilitato' => false,
-                ':hashUtente' => md5($_POST['crudUsername'])
+                ':username'  => $this->post['crudUsername'],
+                ':password'  => HashMsg::hash($this->post['crudPassword']),
+                ':abilitato' => 0,
+                ':hashUtente' => md5($this->post['crudUsername'])
             ]);
         }catch(\PDOException $e){
+            var_dump($e->getMessage());
             echo '<script>alert("Errore creazione utente"); location.href = "http://'.$_SERVER["HTTP_HOST"].'/dashboard"</script>';
             exit;
         }
@@ -53,12 +56,12 @@ class UserCrud extends AbstractCrud {
     protected function update(){
         $pwd = $this->getPwd();
         try{
-            $username = $_POST['oldUsername'];
+            $username = $this->post['oldUsername'];
             $this->table->updateRecordById([
-                ':newUsername' => $_POST['crudUsername'],
+                ':newUsername' => $this->post['crudUsername'],
                 ':password' => $pwd,
-                ':abilitato' => $_POST['attivo'],
-                ':hashUtente' => md5($_POST['crudUsername']),
+                ':abilitato' => (int)$this->post['attivo'],
+                ':hashUtente' => md5($this->post['crudUsername']),
                 ':username' => $username
             ]);
         }catch(\PDOException $e){
@@ -72,7 +75,7 @@ class UserCrud extends AbstractCrud {
     protected function delete(){
         try{
             $this->table->deleteRecordById([
-                ':username' => $_POST['crudUsername'],
+                ':username' => $this->post['crudUsername'],
             ]);
         }catch(\PDOException $e){
             echo '<script>alert("Errore creazione utente"); location.href = "http://'.$_SERVER["HTTP_HOST"].'/dashboarduser"</script>';
