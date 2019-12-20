@@ -8,17 +8,17 @@ composer
 Mysql / MariaDb
 
 **How to install:**
-<br>Copy or clone the repo folder on your device, then run
+<br><br>Copy or clone the repo folder on your device, then run
 `composer install` on your shell. Use *db-dump.sql* file to create the example db. Login credentials are provided below to allow testing for dashboard features.
 
 <br>Administrative user:
-**username:** admin
-**password:** admin
+<br>**username:** admin
+<br>**password:** admin
 
 <br>Editor:
-**username:** user
-**password:** user
-for a regular editor.
+<br>**username:** user
+<br>**password:** user
+<br>for a regular editor.
 
 <br>This project is based on:
 ## SimpleMVC
