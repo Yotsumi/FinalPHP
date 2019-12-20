@@ -29,10 +29,10 @@ class ArticleCrud extends AbstractCrud {
     protected function create(){
         try{
             $this->table->createRecord([
-                ':titolo' => str_replace('-', ' ', $_POST['title']),
-                ':data' => $_POST['data'],
-                ':contenuto' => $_POST['content'],
-                ':autore' => $_POST['author']
+                ':titolo' => str_replace('-', ' ', $this->post['title']),
+                ':data' => $this->post['data'],
+                ':contenuto' => $this->post['content'],
+                ':autore' => $this->post['author']
             ]);
         }catch(\PDOException $e){
             echo '<script>alert("Errore inserimento articolo"); location.href = "http://'.$_SERVER["HTTP_HOST"].'/dashboard"</script>';
@@ -45,11 +45,11 @@ class ArticleCrud extends AbstractCrud {
     protected function update(){
         try{
             $this->table->updateRecordById([
-                ':id' => $_POST['id'],
-                ':titolo' => $_POST['title'],
-                ':data' => $_POST['data'],
-                ':contenuto' => $_POST['content'],
-                ':autore' => $_POST['author']
+                ':id' => $this->post['id'],
+                ':titolo' => $this->post['title'],
+                ':data' => $this->post['data'],
+                ':contenuto' => $this->post['content'],
+                ':autore' => $this->post['author']
             ]);
         }catch(\PDOException $e){
             echo '<script>alert("Errore modifica articolo"); location.href = "http://'.$_SERVER["HTTP_HOST"].'/dashboardarticle"</script>';
@@ -62,7 +62,7 @@ class ArticleCrud extends AbstractCrud {
     protected function delete(){
         try{
             $this->table->deleteRecordById([
-                ':id' => $_POST['id']
+                ':id' => $this->post['id']
             ]);
         }catch(\PDOException $e){
             echo '<script>alert("Errore eliminazione articolo"); location.href = "http://'.$_SERVER["HTTP_HOST"].'/dashboardarticle"</script>';

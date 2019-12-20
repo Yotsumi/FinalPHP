@@ -3,7 +3,6 @@ declare(strict_types=1);
 namespace SimpleMVC\Helper;
 use PDO;
 use PDOException;
-use SimpleMVC\Helper\PostDataHelper;
 
 
 class QueryHandler {
@@ -27,7 +26,6 @@ class QueryHandler {
     }
 
     protected function postQueries(string $query, array $args){
-        PostDataHelper::checkPostData();
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sth = $this->pdo->prepare($query);
         $sth->execute($args);
