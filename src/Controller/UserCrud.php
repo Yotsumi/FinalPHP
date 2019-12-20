@@ -28,15 +28,13 @@ class UserCrud extends AbstractCrud {
     // check if password needs hashing
     protected function getPwd() :string {
         $pwd = $this->post['crudPassword'];
-        if (! hash_equals($this->post['oldPassword'], $this->post['crudPassword'])) {
+        if (! hash_equals($this->post['oldPassword'], $pwd)) {
             $pwd = HashMsg::hash($this->post['crudPassword']);
         }
         return $pwd;
     }
 
     protected function create(){
-        var_dump($this->post);
-       // die();
         try{
             $this->table->createRecord([
                 ':username'  => $this->post['crudUsername'],
@@ -45,7 +43,6 @@ class UserCrud extends AbstractCrud {
                 ':hashUtente' => md5($this->post['crudUsername'])
             ]);
         }catch(\PDOException $e){
-            var_dump($e->getMessage());
             echo '<script>alert("Errore creazione utente"); location.href = "'.'/dashboard"</script>';
             exit;
         }

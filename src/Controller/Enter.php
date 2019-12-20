@@ -7,6 +7,8 @@ use League\Plates\Engine;
 use Psr\Http\Message\ServerRequestInterface;
 use SimpleMVC\Helper\SessionHandle;
 use SimpleMVC\Helper\LoginAction;
+use SimpleMVC\Helper\PostDataHelper;
+use SimpleMVC\Helper\CleanData;
 
 use SimpleMVC\Helper\CryptMsg;
 
@@ -23,9 +25,13 @@ class Enter implements ControllerInterface
 
     public function execute(ServerRequestInterface $request)
     {
+        $post = $request->getParsedBody();
+        PostDataHelper::checkPostData($post);
+        $post = CleanData::cleanArray($post);
+
         // exec login logics
-        $username = addslashes(filter_var($_POST['user'], FILTER_SANITIZE_STRING));
-        $password = $_POST['pwd'];
+        $username = $post['user'];
+        $password = $post['pwd'];
 
         if ($this->login->loginUser($username, $password)) {
             header('Location: '. "/dashboard"); 
