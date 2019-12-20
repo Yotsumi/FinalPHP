@@ -15,7 +15,7 @@
         <br>
         Password:<br>
         <input type="password" name="crudPassword" value="<?=$this->e($args[0]->getPassword())?>">
-        <input type="hidden" name="oldPassword" value="<?= $this->e($args[0]->getUsername()) ?>">
+        <input type="hidden" name="oldPassword" value="<?= $this->e($args[0]->getPassword()) ?>">
         <br>
         <input type="hidden" name="crudId" value="<?= $this->e($args[0]->getHashUtente()) ?>">
         <input type="hidden" name="oldUsername" value="<?= $this->e($args[0]->getUsername()) ?>">
