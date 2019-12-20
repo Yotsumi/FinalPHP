@@ -28,7 +28,7 @@ class Login implements ControllerInterface
             echo $this->plates->render('login');
             $this->session->close();
         } else {
-            header('Location: http://'.$_SERVER["HTTP_HOST"]. "/dashboard");
+            header('Location: '. "/dashboard");
             $this->session->close();
         }
        

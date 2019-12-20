@@ -28,7 +28,7 @@ class Enter implements ControllerInterface
         $password = $_POST['pwd'];
 
         if ($this->login->loginUser($username, $password)) {
-            header('Location: http://'.$_SERVER["HTTP_HOST"]. "/dashboard"); 
+            header('Location: '. "/dashboard"); 
         } else {
             http_response_code(401);
             echo $this->plates->render('401');

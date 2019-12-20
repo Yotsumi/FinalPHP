@@ -46,10 +46,10 @@ class UserCrud extends AbstractCrud {
             ]);
         }catch(\PDOException $e){
             var_dump($e->getMessage());
-            echo '<script>alert("Errore creazione utente"); location.href = "http://'.$_SERVER["HTTP_HOST"].'/dashboard"</script>';
+            echo '<script>alert("Errore creazione utente"); location.href = "'.'/dashboard"</script>';
             exit;
         }
-        header('Location: http://'.$_SERVER["HTTP_HOST"]. "/$this->redirect" );
+        header('Location: '. "/$this->redirect" );
         exit;
     }
 
@@ -65,10 +65,10 @@ class UserCrud extends AbstractCrud {
                 ':username' => $username
             ]);
         }catch(\PDOException $e){
-            echo '<script>alert("Errore creazione utente"); location.href = "http://'.$_SERVER["HTTP_HOST"].'/dashboarduser"</script>';
+            echo '<script>alert("Errore creazione utente"); location.href = "'.'/dashboarduser"</script>';
             exit;
         }
-        header('Location: http://'.$_SERVER["HTTP_HOST"]. "/$this->redirect");
+        header('Location: '. "/$this->redirect");
         exit;
     }
 
@@ -78,10 +78,10 @@ class UserCrud extends AbstractCrud {
                 ':username' => $this->post['crudUsername'],
             ]);
         }catch(\PDOException $e){
-            echo '<script>alert("Errore creazione utente"); location.href = "http://'.$_SERVER["HTTP_HOST"].'/dashboarduser"</script>';
+            echo '<script>alert("Errore creazione utente"); location.href = "'.'/dashboarduser"</script>';
             exit;
         }
-        header('Location: http://'.$_SERVER["HTTP_HOST"]. "/$this->redirect");
+        header('Location: '. "/$this->redirect");
         exit;
     }
 
