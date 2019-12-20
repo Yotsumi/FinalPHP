@@ -7,7 +7,7 @@ use League\Plates\Engine;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use SimpleMVC\Controller\Home;
-use SimpleMVC\Model\ArticoloClient;
+// use SimpleMVC\Model\ArticoloClient;
 use SimpleMVC\Model\Articolo;
 use SimpleMVC\Helper\SessionHandle;
 use DI\ContainerBuilder;
@@ -37,9 +37,9 @@ final class HomeTest extends TestCase
                     // ->disableOriginalClone()
                     // ->disableArgumentCloning()
                     // ->disallowMockingUnknownTypes()
+                    ->setMethods(['selectDailyArticles'])
                      ->getMock();
-        $this->db->setMethods(['selectDailyArticles'])
-        ->willReturn([]);
+       
 
         $this->plates = new Engine('src/View');
 
