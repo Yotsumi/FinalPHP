@@ -14,6 +14,7 @@ abstract class AbstractCrud implements ControllerInterface {
     protected $plates;
     protected $login;
     protected $table;
+    protected $request;
 
     protected function getCrudAction(ServerRequestInterface $request) :string {
         $regexString = RegexHelper::setUrl('\w*');
@@ -30,6 +31,7 @@ abstract class AbstractCrud implements ControllerInterface {
 
     public function execute(ServerRequestInterface $request)
     {
+        $this->request = $request;
         if ($this->login->isLoggedIn()) {
             $action = $this->getCrudAction($request);
             if ($action == 'c') {
