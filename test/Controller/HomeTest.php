@@ -7,7 +7,7 @@ use League\Plates\Engine;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use SimpleMVC\Controller\Home;
-// use SimpleMVC\Model\ArticoloClient;
+use SimpleMVC\Model\ArticoloClient;
 use SimpleMVC\Model\Articolo;
 use SimpleMVC\Helper\SessionHandle;
 use DI\ContainerBuilder;
@@ -21,26 +21,13 @@ final class HomeTest extends TestCase
         $container = $builder->build();
         $this->articles = [];
        
-        $this->db  = /*(new class ($container->get('public_db_manager')) extends ArticoloCLient {
+        $this->db  = (new class ($container->get('public_db_manager')) extends ArticoloCLient {
                 public function __construct(\PDO $pdo){}
                 public function selectDailyArticles() :?array{ 
                     return [];
                 }
             });
-            $this->getMockBuilder(
-                AricoloClient::class/*,
-                [],
-                [$container->get('public_db_manager')]
-            )->getMock();*/
-            $this->getMockBuilder(AricoloClient::class)
-                     ->disableOriginalConstructor()
-                    // ->disableOriginalClone()
-                    // ->disableArgumentCloning()
-                    // ->disallowMockingUnknownTypes()
-                    ->setMethods(['selectDailyArticles'])
-                     ->getMock();
-       
-
+            
         $this->plates = new Engine('src/View');
 
         $this->home   = new Home(
