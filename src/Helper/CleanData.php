@@ -5,7 +5,10 @@ namespace SimpleMVC\Helper;
 
 class CleanData {
 
-    public static function clean(string $data) :string {
-        return addslashes(strip_tags($data));
+    public static function cleanArray(array $data) :array {
+        foreach ($data AS $k=>$v) {
+            $data[$k] = addslashes(strip_tags($v));
+        }
+        return $data;
     }
 }

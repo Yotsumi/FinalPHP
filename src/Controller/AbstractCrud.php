@@ -9,7 +9,7 @@ use SimpleMVC\Helper\LoginAction;
 use SimpleMVC\Helper\RegexHelper;
 use SimpleMVC\Model\DbInterface;
 use SimpleMVC\Helper\PostDataHelper;
-
+use SimpleMVC\Helper\CleanData;
 
 abstract class AbstractCrud implements ControllerInterface {
 
@@ -36,6 +36,7 @@ abstract class AbstractCrud implements ControllerInterface {
     {
         $this->post = $request->getParsedBody();
         PostDataHelper::checkPostData($this->post);
+        $this->post = CleanData::cleanArray($this->post);
 
         if ($this->login->isLoggedIn()) {
             $action = $this->getCrudAction($request);

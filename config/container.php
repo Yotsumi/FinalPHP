@@ -26,11 +26,11 @@ return [
     SessionHandle::class => function(ContainerInterface $c) {
         return SessionHandle::instance($c->get(CryptMsg::class), $c->get(CryptMsg::class)::nonce());
     },
-
+/*
     LoginAction::class => function(ContainerInterface $c) {
         return new LoginAction($c->get(SessionHandle::class), $c->get(UtenteDb::class));
     },
-
+*/
     // table maps
     UtenteDb::class => function (ContainerInterface $c) {
         return new UtenteDb($c->get('admin_db_manager'));
