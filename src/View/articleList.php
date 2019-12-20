@@ -14,7 +14,7 @@
             <input type="submit" formaction="/articlecrud/d" value="Delete">
             <input type="hidden" name="id" value="<?=$this->e($article->getId())?>">
         </form>
-        <a style="display:inline-block; margin-right:0.5em;" href="/dashboardarticle/<?= str_replace(' ', '-', $this->e($article->getTitolo()))?>">
+        <a style="display:inline-block; margin-right:0.5em;" href="/dashboardarticle/<?= str_replace(' ', '%20', $this->e($article->getTitolo()))?>">
             <button>Edit</button>
         </a>    
         <p><?=$this->e($article->getContenuto())?></p>

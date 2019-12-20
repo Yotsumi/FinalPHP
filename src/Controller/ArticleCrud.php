@@ -29,7 +29,7 @@ class ArticleCrud extends AbstractCrud {
     protected function create(){
         try{
             $this->table->createRecord([
-                ':titolo' => str_replace('-', ' ', $_POST['title']),
+                ':titolo' => str_replace('%20', ' ', $_POST['title']),
                 ':data' => $_POST['data'],
                 ':contenuto' => $_POST['content'],
                 ':autore' => $_POST['author']
