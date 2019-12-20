@@ -36,10 +36,10 @@ class ArticleCrud extends AbstractCrud {
 
             ]);
         }catch(\PDOException $e){
-            echo '<script>alert("Errore inserimento articolo"); location.href = "http://'.$_SERVER["HTTP_HOST"].'/dashboard"</script>';
+            echo '<script>alert("Errore inserimento articolo"); location.href = "/dashboard"</script>';
             exit;
         }
-        header('Location: http://'.$_SERVER["HTTP_HOST"]. "/$this->redirect");
+        header('Location: '. "/$this->redirect");
         exit;
     }
 
@@ -53,10 +53,10 @@ class ArticleCrud extends AbstractCrud {
                 ':autore' => $this->post['author']
             ]);
         }catch(\PDOException $e){
-            echo '<script>alert("Errore modifica articolo"); location.href = "http://'.$_SERVER["HTTP_HOST"].'/dashboardarticle"</script>';
+            echo '<script>alert("Errore modifica articolo"); location.href = "'.'/dashboardarticle"</script>';
             exit;
         }
-        header('Location: http://'.$_SERVER["HTTP_HOST"]. "/$this->redirect");
+        header('Location: '. "/$this->redirect");
         exit;
     }
 
@@ -66,10 +66,10 @@ class ArticleCrud extends AbstractCrud {
                 ':id' => $this->post['id']
             ]);
         }catch(\PDOException $e){
-            echo '<script>alert("Errore eliminazione articolo"); location.href = "http://'.$_SERVER["HTTP_HOST"].'/dashboardarticle"</script>';
+            echo '<script>alert("Errore eliminazione articolo"); location.href = "'.'/dashboardarticle"</script>';
             exit;
         }
-        header('Location: http://'.$_SERVER["HTTP_HOST"]. "/$this->redirect");
+        header('Location: '. "/$this->redirect");
         exit;
     }
 
