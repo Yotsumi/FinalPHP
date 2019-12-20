@@ -1,3 +1,26 @@
+## FINAL PHP PROJECT (Buscema - Dumitru - Velocci)
+A simple website for a basic online newspaper.
+
+<br>**Installation**:
+<br>**Requirements:**
+php 7.3+
+composer
+Mysql / MariaDb
+
+**How to install:**
+<br><br>Copy or clone the repo folder on your device, then run
+`composer install` on your shell. Use *db-dump.sql* file to create the example db. Login credentials are provided below to allow testing for dashboard features.
+
+<br>Administrative user:
+<br>**username:** admin
+<br>**password:** admin
+
+<br>Editor:
+<br>**username:** user
+<br>**password:** user
+<br>for a regular editor.
+
+<br>This project is based on:
 ## SimpleMVC
 
 This is a mini MVC PHP framework using a simple routing system and [PSR-7](https://www.php-fig.org/psr/psr-7/) standard for HTTP messages.
